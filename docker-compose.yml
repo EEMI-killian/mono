@@ -1,0 +1,17 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: makeitshine
+    ports:
+      - "8080:8080"
+  redis-server:
+    image: redis/redis-stack-server
+    ports:
+      - "6379:6379"
+    depends_on:
+      - db
