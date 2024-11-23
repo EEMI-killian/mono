@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HealthController 
 {
-    #[Route('/health', name: 'healthCheck', methods: ['GET'])]
+    #[Route('/Health', name: 'HealthCheck', methods: ['GET'])]
     public function health(): Response
     {
         return new Response("ok",200);
