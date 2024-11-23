@@ -3,6 +3,7 @@
 use App\Controller\HealthController;
 use App\Controller\AnalyseImageController;
 use App\Controller\VerifyPhoneNumberController;
+use App\Controller\SignUpController;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes): void {
@@ -17,4 +18,8 @@ return function (RoutingConfigurator $routes): void {
     $routes->add('VerifyPhoneNumber', '/VerifyPhoneNumber')
         ->controller([VerifyPhoneNumberController::class, 'VerifyPhoneNumber'])
     ;
+    /**-----------------------USER-ROUTES---------------------------**/
+    $routes->add('SignUp','/SignUp')
+        ->controller([SignUpController::class,'SignUp'])
+        ;
 };
