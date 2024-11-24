@@ -20,10 +20,13 @@ class VerifyPhoneNumberController
         if (!isset($data['phoneNumber']) ) {
             return new Response('Invalid input data', Response::HTTP_BAD_REQUEST);
         }
+        $args = [
+            'phoneNumber' => $data['phoneNumber']
+        ];
         
         $twilioGateway = new TwilioGateway($_ENV['TWILIO_SID'], $_ENV['TWILIO_AUTH_TOKEN'], $_ENV['TWILIO_SERVICE_SID']);
         $sendOtpSmsUseCase = new VerifyPhoneNumberUseCase($twilioGateway);
-        $response = $sendOtpSmsUseCase->execute($data);
+        $response = $sendOtpSmsUseCase->execute($args);
         if (json_decode($response, true)['status'] === false) {
             return new Response(json_decode($response, true)['error'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }else{

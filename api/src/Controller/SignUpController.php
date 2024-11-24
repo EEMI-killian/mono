@@ -45,6 +45,20 @@ class SignUpController
         if(!isset($data['birthDate']) || $data['birthDate'] == null || !preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}+$/', $data['birthDate'])){
             return new Response('Invalid input data', Response::HTTP_BAD_REQUEST);
         }
+        $args = [
+            'firstName' => $data['firstName'],
+            'lastName' => $data['lastName'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'phoneNumber' => $data['phoneNumber'],
+            'address' => $data['address'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'zipCode' => $data['zipCode'],
+            'country' => $data['country'],
+            'birthDate' => $data['birthDate']
+        ];
+        
 
 
         return new Response("ok",200);

@@ -19,10 +19,15 @@ class AnalyseImageController
         if (!isset($data['url']) || !isset($data['prompt']) || !isset($data['type'])) {
             return new Response('Invalid input data', Response::HTTP_BAD_REQUEST);
         }
+        $args = [
+            'url' => $data['url'],
+            'prompt' => $data['prompt'],
+            'type' => $data['type']
+        ];
         
         $openaiGateway = new OpenaiGateway($_ENV['OPENAI_API_KEY']);
         $analyseImageUseCase = new AnalyseImageUseCase($openaiGateway);
-        $response = $analyseImageUseCase->execute($data);
+        $response = $analyseImageUseCase->execute($args);
         if (json_decode($response, true)['status'] === false) {
             return new Response(json_decode($response, true)['error'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }else{
