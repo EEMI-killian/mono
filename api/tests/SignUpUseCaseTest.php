@@ -3,7 +3,7 @@ namespace App\Tests;
 
 use PHPUnit\Framework\TestCase;
 use App\SignUp\SignUpUseCase;
-use App\Repository\IUserRepository;
+use App\Repository\User\IUserRepository;
 use App\Entity\User;
 
 class SignUpUseCaseTest extends TestCase

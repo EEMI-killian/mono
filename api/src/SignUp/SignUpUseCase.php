@@ -2,7 +2,7 @@
 namespace App\SignUp;
 
 
-use App\Repository\IUserRepository;
+use App\Repository\User\IUserRepository;
 use App\Entity\User;
 
 class SignUpUseCase {

@@ -2,6 +2,7 @@
 // config/routes.php
 use App\Controller\HealthController;
 use App\Controller\AnalyseImageController;
+use App\Controller\CheckEmailController;
 use App\Controller\VerifyPhoneNumberController;
 use App\Controller\SignUpController;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -21,5 +22,8 @@ return function (RoutingConfigurator $routes): void {
     /**-----------------------USER-ROUTES---------------------------**/
     $routes->add('SignUp','/SignUp')
         ->controller([SignUpController::class,'SignUp'])
+    ;
+    $routes->add('CheckEmail','/CheckEmail')
+        ->controller([CheckEmailController::class,'CheckEmail'])
     ;
 };

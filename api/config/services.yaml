@@ -20,13 +20,13 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Repository\UserRepository:
+    App\Repository\User\UserRepository:
         arguments:
             $registry: '@doctrine'
 
     App\SignUp\SignUpUseCase:
         arguments:
-            $repository: '@App\Repository\UserRepository'
+            $repository: '@App\Repository\User\UserRepository'
         
     App\Controller\:
         resource: '../src/Controller'
