@@ -21,5 +21,5 @@ return function (RoutingConfigurator $routes): void {
     /**-----------------------USER-ROUTES---------------------------**/
     $routes->add('SignUp','/SignUp')
         ->controller([SignUpController::class,'SignUp'])
-        ;
+    ;
 };

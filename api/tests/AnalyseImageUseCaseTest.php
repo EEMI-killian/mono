@@ -10,6 +10,7 @@ class AnalyseImageUseCaseTest extends WebTestCase
 {
     public function testHappyPath(): void
     {
+        /** @var IOpenaiGateway&\PHPUnit\Framework\MockObject\MockObject $openaiGateway */
         $openaiGateway = $this->createMock(IOpenaiGateway::class);
         $openaiGateway->expects($this->once())
             ->method('analyseImage')
@@ -30,6 +31,7 @@ class AnalyseImageUseCaseTest extends WebTestCase
 
     public function testUnhappyPath(): void
     {
+        /** @var IOpenaiGateway&\PHPUnit\Framework\MockObject\MockObject $openaiGateway */
         $openaiGateway = $this->createMock(IOpenaiGateway::class);
         $openaiGateway->expects($this->once())
             ->method('analyseImage')

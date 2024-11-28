@@ -47,6 +47,12 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $birthDate = null;
 
+    #[ORM\Column]
+    private ?bool $isAdmin = null;
+
+    #[ORM\Column]
+    private ?bool $isVerfied = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -180,6 +186,30 @@ class User
     public function setBirthDate(string $birthDate): static
     {
         $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    public function isAdmin(): ?bool
+    {
+        return $this->isAdmin;
+    }
+
+    public function setAdmin(bool $isAdmin): static
+    {
+        $this->isAdmin = $isAdmin;
+
+        return $this;
+    }
+
+    public function isVerfied(): ?bool
+    {
+        return $this->isVerfied;
+    }
+
+    public function setVerfied(bool $isVerfied): static
+    {
+        $this->isVerfied = $isVerfied;
 
         return $this;
     }
