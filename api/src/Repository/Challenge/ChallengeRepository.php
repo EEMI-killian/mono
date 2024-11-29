@@ -18,22 +18,28 @@ class ChallengeRepository implements IChallengeRepository
 
     public function setChallenge(Challenge $challenge): void
     {
-        $this->predisClient->set($challenge->getChallengeId(), json_encode($challenge->getChallengeCode()), 'EX', 300);
+        $this->predisClient->hset($challenge->getChallengeId(), 'challengeCode', $challenge->getChallengeCode());
+        $this->predisClient->hset($challenge->getChallengeId(), 'challengeEmail', $challenge->getChallengeEmail());
+        $this->predisClient->expire($challenge->getChallengeId(),300 );
     }
 
     public function getChallenge(string $challengeId): ?Challenge
     {
-        $challenge = $this->predisClient->get($challengeId);
-        if($challenge === null){
+        $challenge = $this->predisClient->hgetall($challengeId);
+        if(empty($challenge)){
             return null;
         }
-        $challengeResponse = new Challenge(json_decode($challenge, true));
-
-        return $challengeResponse;
+        $challengeObj = new Challenge();
+        $challengeObj->setChallengeId($challengeId);
+        $challengeObj->setChallengeCode($challenge['challengeCode']);
+        $challengeObj->setChallengeEmail($challenge['challengeEmail']);
+        return $challengeObj;
+        
     }
 
     public function killChallenge(string $challengeId): void
     {
         $this->predisClient->del($challengeId);
+
     }
 }

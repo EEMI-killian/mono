@@ -14,22 +14,25 @@ class Challenge
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $challengeId = null;
+    private ?string $challengeId = null;
 
     #[ORM\Column]
     private ?int $challengeCode = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $challengeEmail = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getChallengeId(): ?int
+    public function getChallengeId(): ?string
     {
         return $this->challengeId;
     }
 
-    public function setChallengeId(int $challengeId): static
+    public function setChallengeId(string $challengeId): static
     {
         $this->challengeId = $challengeId;
 
@@ -44,6 +47,18 @@ class Challenge
     public function setChallengeCode(int $challengeCode): static
     {
         $this->challengeCode = $challengeCode;
+
+        return $this;
+    }
+
+    public function getChallengeEmail(): ?string
+    {
+        return $this->challengeEmail;
+    }
+
+    public function setChallengeEmail(string $challengeEmail): static
+    {
+        $this->challengeEmail = $challengeEmail;
 
         return $this;
     }

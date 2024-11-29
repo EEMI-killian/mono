@@ -1,12 +1,12 @@
 <?php 
 
-namespace App\SendChallengePhone;
+namespace App\SendChallengeEmail;
 
 
 use App\Entity\Challenge;
 use App\Repository\Challenge\IChallengeRepository;
 
-class SendChallengePhoneUseCase {
+class SendChallengeEmailUseCase {
 
     private $challengeRepository;
 
@@ -16,7 +16,7 @@ class SendChallengePhoneUseCase {
     }
 
 
-    public function execute(array $sendChallengePhoneArgs ): string
+    public function execute(array $sendChallengePhoneArgs): string
     {
         try{
             do {
@@ -27,7 +27,7 @@ class SendChallengePhoneUseCase {
             $challengeCode = 808080;
         }
         $challenge = new Challenge();
-        $challengeid = "phoneChallenge:".rand(100000, 999999);
+        $challengeid = "emailChallenge:".rand(100000, 999999);
         $challenge->setChallengeId($challengeid);
         $challenge->setChallengeCode($challengeCode);
         $challenge->setChallengeEmail($sendChallengePhoneArgs['email']);

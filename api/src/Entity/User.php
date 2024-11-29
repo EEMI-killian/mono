@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\User\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Enum\UserRole;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -48,10 +49,13 @@ class User
     private ?string $birthDate = null;
 
     #[ORM\Column]
-    private ?bool $isAdmin = null;
+    private ?bool $isPhoneNumberVerified = null;
 
     #[ORM\Column]
-    private ?bool $isVerfied = null;
+    private ?bool $isEmailVerified = null;
+
+    #[ORM\Column(type: 'string', enumType: UserRole::class)]
+    private UserRole $role;
 
     public function getId(): ?int
     {
@@ -190,27 +194,37 @@ class User
         return $this;
     }
 
-    public function isAdmin(): ?bool
+    public function isPhoneNumberVerified(): ?bool
     {
-        return $this->isAdmin;
+        return $this->isPhoneNumberVerified;
     }
 
-    public function setAdmin(bool $isAdmin): static
+    public function setPhoneNumberVerified(bool $isPhoneNumberVerified): static
     {
-        $this->isAdmin = $isAdmin;
+        $this->isPhoneNumberVerified = $isPhoneNumberVerified;
 
         return $this;
     }
 
-    public function isVerfied(): ?bool
+    public function isEmailVerified(): ?bool
     {
-        return $this->isVerfied;
+        return $this->isEmailVerified;
     }
 
-    public function setVerfied(bool $isVerfied): static
+    public function setEmailVerified(bool $isEmailVerified): static
     {
-        $this->isVerfied = $isVerfied;
+        $this->isEmailVerified = $isEmailVerified;
 
+        return $this;
+    }
+    public function getStatus(): UserRole
+    {
+        return $this->role;
+    }
+
+    public function setrole(UserRole $role): self
+    {
+        $this->role = $role;
         return $this;
     }
 }

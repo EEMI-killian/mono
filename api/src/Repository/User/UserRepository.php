@@ -26,4 +26,20 @@ class UserRepository extends ServiceEntityRepository implements IUserRepository
       return $this->findOneBy(['email' => $email]);
     }
 
+    public function verifiedPhone($email): void
+    {
+      $user = $this->findByEmail($email);
+      $user->setPhoneNumberVerified(true);
+      $this->getEntityManager()->persist($user);
+      $this->getEntityManager()->flush();
+    }
+
+    public function verifiedEmail($email): void
+    {
+      $user = $this->findByEmail($email);
+      $user->setEmailVerified(true);
+      $this->getEntityManager()->persist($user);
+      $this->getEntityManager()->flush();
+    }
+
 }

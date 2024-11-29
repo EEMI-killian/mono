@@ -4,6 +4,7 @@ namespace App\SignUp;
 
 use App\Repository\User\IUserRepository;
 use App\Entity\User;
+use App\Enum\UserRole;
 
 class SignUpUseCase {
     
@@ -65,8 +66,9 @@ class SignUpUseCase {
         $user->setPhoneNumber($data['phoneNumber']);
         $user->setState($data['state']);
         $user->setZipCode($data['zipCode']);
-        $user->setVerfied(false);
-        $user->setAdmin(false);
+        $user->setPhoneNumberVerified(false);
+        $user->setEmailVerified(false);
+        $user->setrole(UserRole::USER);
         $this->repository->save($user );
       return json_encode(["status" => true, "message" => "User created successfully"]);
       } catch (\Exception $e) {
