@@ -12,8 +12,8 @@ services:
       - "5432:5432"
   redis-server:
     container_name: redis
-    image: redis/redis-stack-server
+    image: redis/redis-stack-server:latest
     ports:
-      - "6380:6380"
+      - "6379:6379"
     depends_on:
       - db

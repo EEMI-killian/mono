@@ -3,8 +3,8 @@
 use App\Controller\HealthController;
 use App\Controller\AnalyseImageController;
 use App\Controller\CheckEmailController;
-use App\Controller\VerifyPhoneNumberController;
 use App\Controller\SignUpController;
+use App\Controller\SendChallengePhoneController;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes): void {
@@ -12,12 +12,12 @@ return function (RoutingConfigurator $routes): void {
         ->controller([HealthController::class, 'health'])
     ;
     /**------------------------OPENAI ROUTES------------------------**/
-    $routes->add('analyseImage', '/analyseImage')
-        ->controller([AnalyseImageController::class, 'VnalyseImage'])
+    $routes->add('analyseImage', '/AnalyseImage')
+        ->controller([AnalyseImageController::class, 'AnalyseImage'])
     ;
     /**-----------------------OTP-CHALLENGE-ROUTES------------------**/
-    $routes->add('VerifyPhoneNumber', '/VerifyPhoneNumber')
-        ->controller([VerifyPhoneNumberController::class, 'VerifyPhoneNumber'])
+    $routes->add('SendChallengePhone', '/SendChallengePhone')
+        ->controller([SendChallengePhoneController::class, 'SendChallengePhone'])
     ;
     /**-----------------------USER-ROUTES---------------------------**/
     $routes->add('SignUp','/SignUp')
@@ -25,5 +25,5 @@ return function (RoutingConfigurator $routes): void {
     ;
     $routes->add('CheckEmail','/CheckEmail')
         ->controller([CheckEmailController::class,'CheckEmail'])
-    ;
+        ;
 };

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AnalyseImageController 
 {
-    #[Route('/AnalyseImage', name: 'analyseImage', methods: ['GET'])]
+    #[Route('/AnalyseImage', name: 'AnalyseImage', methods: ['GET'])]
     public function analyseImage(Request $request): Response
     {
         $data = json_decode(($request->getContent()), true);
