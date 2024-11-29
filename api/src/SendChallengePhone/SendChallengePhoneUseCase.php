@@ -16,14 +16,14 @@ class SendChallengePhoneUseCase {
     }
 
 
-    public function execute(array $sendChallengePhoneArgs ): string
+    public function execute(array $sendChallengePhoneArgs, bool $isPhoneFake ): string
     {
         try{
             do {
                 $challengeCode = rand(100000, 999999);
             } while (in_array($challengeCode,         [123456, 654321, 111111, 222222, 333333, 444444, 555555, 666666, 777777, 888888, 999999]));
         
-        if($_ENV['PHONE_NUMBER_IS_FAKE']){
+        if($isPhoneFake){
             $challengeCode = 808080;
         }
         $challenge = new Challenge();

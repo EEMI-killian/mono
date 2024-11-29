@@ -26,7 +26,7 @@ class SendChallengePhoneController {
             'phoneNumber' => $data['phoneNumber'],
             'email' => $data['email']
         ];
-        $result = $sendChallengePhone->execute($sendChallengePhoneArgs);
+        $result = $sendChallengePhone->execute($sendChallengePhoneArgs,$_ENV['IS_PHONE_FAKE']);
         $result = json_decode($result, true);
         if($result["status"] === false){
             return new Response($result["error"], Response::HTTP_BAD_REQUEST);
