@@ -7,7 +7,7 @@ use App\Repository\Challenge\IChallengeRepository;
 
 class SendChallengePhoneUseCaseTest extends TestCase
 {
-    public function testSendChallengePhoneUseCase()
+    public function testSendChallengePhoneUseCase(): void 
     {
         
         /** @var IChallengeRepository&\PHPUnit\Framework\MockObject\MockObject $challengeRepository */

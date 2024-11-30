@@ -8,7 +8,7 @@ use App\Repository\Challenge\IChallengeRepository;
 
 class SendChallengePhoneUseCase {
 
-    private $challengeRepository;
+    private IChallengeRepository $challengeRepository;
 
     public function __construct(IChallengeRepository $challengeRepository)
     {

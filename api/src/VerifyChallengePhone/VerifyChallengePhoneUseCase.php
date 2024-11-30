@@ -2,15 +2,16 @@
 
 namespace App\VerifyChallengePhone;
 
-use App\Repository\Challenge\ChallengeRepository;
+use App\Repository\Challenge\IChallengeRepository;
 use App\Repository\User\IUserRepository;
+use PhpParser\Node\Expr\Print_;
 
 class VerifyChallengePhoneUseCase
 {
-    private ChallengeRepository $challengeRepository;
+    private IChallengeRepository $challengeRepository;
     private IUserRepository $userRepository;
 
-    public function __construct(ChallengeRepository $challengeRepository, IUserRepository $userRepository)
+    public function __construct(IChallengeRepository $challengeRepository, IUserRepository $userRepository)
     {
         $this->challengeRepository = $challengeRepository;
         $this->userRepository = $userRepository;
