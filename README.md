@@ -2,27 +2,7 @@ This is the monorepo of Shape of you 💅
 
 ## Project
 
-- [Api](./api/README.md)
-- [App](./app/README.md)
-
-## requirements
-
-start the front
-
-```bash
-cd app
-yarn dev
-```
-
-start the back
-
-```bash
-cd api
-symfony server:start
-```
-
-start the db and redis server
-
-```bash
-docker-compose up -d
-```
+- [Api](./apps/api/README.md)
+- [Mobile](./apps/mobile/README.md)
+- [Admin](./apps/admin/README.md)
+- [n5](./libs/n5/README.md)
