@@ -1,8 +1,19 @@
-version: "3.1"
+name: mono
 
 services:
-  db:
-    container_name: postgres
+  pgadmin:
+    container_name: pgadmin_makeitshine
+    image: dpage/pgadmin4
+    ports:
+      - 3051:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: some@one.com
+      PGADMIN_DEFAULT_PASSWORD: someone
+    volumes:
+      - "./config/pgadmin/servers.json:/pgadmin4/servers.json"
+
+  postgres:
+    container_name: postgres_makeitshine
     image: postgres
     environment:
       POSTGRES_PASSWORD: root
@@ -10,10 +21,11 @@ services:
       POSTGRES_DB: makeitshine
     ports:
       - "5432:5432"
+
   redis-server:
-    container_name: redis
+    container_name: redis_makeitshine
     image: redis/redis-stack-server:latest
     ports:
       - "6379:6379"
     depends_on:
-      - db
+      - postgres

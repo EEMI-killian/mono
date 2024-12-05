@@ -33,9 +33,6 @@ class SignUpUseCaseTest extends TestCase
             'zipCode' => '12345',
             'country' => 'USA',
             'birthDate' => '2000-01-01',
-            'isAdmin' => false,
-            'isVerified' => false
-
         ];
 
         $response = $signUpUseCase->execute($data);
