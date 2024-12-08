@@ -8,6 +8,7 @@ use App\Controller\SendChallengePhoneController;
 use App\Controller\SendChallengeEmailController;
 use App\Controller\VerifyChallengePhoneController;
 use App\Controller\VerifyChallengeEmailController;
+use App\Controller\LoginController;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes): void {
@@ -38,4 +39,7 @@ return function (RoutingConfigurator $routes): void {
     $routes->add('CheckEmail','/CheckEmail')
         ->controller([CheckEmailController::class,'CheckEmail'])
         ;
+    $routes->add('Login','/Login')
+        ->controller([LoginController::class,'Login'])
+    ;
 };
