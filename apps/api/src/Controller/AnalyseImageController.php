@@ -11,18 +11,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AnalyseImageController 
 {
-    #[Route('/AnalyseImage', name: 'AnalyseImage', methods: ['GET'])]
+    #[Route('/AnalyseImage', name: 'AnalyseImage', methods: ['POST'])]
     public function analyseImage(Request $request): Response
     {
         $data = json_decode(($request->getContent()), true);
 
-        if (!isset($data['url']) || !isset($data['prompt']) || !isset($data['type'])) {
+        if (!isset($data['url']) || !isset($data['prompt'])) {
             return new Response('Invalid input data', Response::HTTP_BAD_REQUEST);
         }
         $args = [
             'url' => $data['url'],
             'prompt' => $data['prompt'],
-            'type' => $data['type']
         ];
         
         $openaiGateway = new OpenaiGateway($_ENV['OPENAI_API_KEY']);
