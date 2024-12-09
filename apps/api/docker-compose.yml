@@ -21,6 +21,8 @@ services:
       POSTGRES_DB: makeitshine
     ports:
       - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
 
   redis-server:
     container_name: redis_makeitshine
@@ -29,3 +31,5 @@ services:
       - "6379:6379"
     depends_on:
       - postgres
+volumes:
+  pg_data:
