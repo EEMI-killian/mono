@@ -14,7 +14,7 @@ services:
 
   postgres:
     container_name: postgres_makeitshine
-    image: postgres
+    image: postgres:13.4
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
