@@ -23,3 +23,6 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+# Ignore images uploaded to the public/uploads/images directory
+/public/uploads/images/

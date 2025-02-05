@@ -30,7 +30,7 @@ class AppFixtures extends Fixture
             ['name' => 'shoes puma', 'brand' => 'Puma', 'color' => 'red', 'type' => 'shoes'],
         ];
 
-        // Création des objets Item
+    
         $createdItems = [];
         foreach ($items as $itemData) {
             $newItem = new Item();
@@ -39,23 +39,23 @@ class AppFixtures extends Fixture
             $newItem->setColor($itemData['color']);
             $newItem->setType($itemData['type']);
             $manager->persist($newItem);
-            $createdItems[] = $newItem; // On stocke les objets créés pour les réutiliser après
+            $createdItems[] = $newItem; 
         }
 
-        // Création de l'Outfit
+  
         $outfit = new Outfit();
         $outfit->setName('Sporty outfit');
         $outfit->setImageUrl('https://via.placeholder.com/150');
         $outfit->setAddAt(new \DateTimeImmutable());
 
-        // Ajout des Items à l'Outfit
+     
         $outfit->addItem($createdItems[0]);
         $outfit->addItem($createdItems[1]);
         $outfit->addItem($createdItems[2]);
 
         $manager->persist($outfit);
 
-        // Sauvegarde en base de données
+        
         $manager->flush();
     }
 }
