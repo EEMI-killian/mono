@@ -1,17 +1,31 @@
 {# filepath: templates/outfit/new.html.twig #}
 
+{% block title %}Ajouter une nouvelle tenue{% endblock %}
+
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Create new Outfit</h1>
+<div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-purple-600 to-purple-800 px-6 py-12">
+    <h1 class="text-3xl font-bold text-white mb-8 text-center">Ajouter une nouvelle tenue</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn">Save</button>
-    {{ form_end(form) }}
+    <div class="w-full max-w-md">
+        {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+            {% for field in form %}
+                <div class="flex flex-col">
+                    {{ form_label(field, null, {'label_attr': {'class': 'text-white font-medium mb-1'}}) }}
+                    {{ form_widget(field, {'attr': {'class': 'w-full p-3 rounded-lg border border-white bg-white/10 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white'}}) }}
+                    {{ form_errors(field, {'attr': {'class': 'text-red-300 text-sm mt-1'}}) }}
+                </div>
+            {% endfor %}
+            <button class="w-full bg-white text-purple-700 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-200 transition">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
 
     {% if aiResponse %}
-        <h2>AI Response</h2>
-        <pre>{{ aiResponse|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+        <div class="mt-8 w-full max-w-md">
+            <h2 class="text-xl font-semibold text-white mb-2">Réponse AI</h2>
+            <pre class="bg-white/20 text-white p-4 rounded-lg text-sm overflow-auto">{{ aiResponse|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+        </div>
     {% endif %}
+</div>
 {% endblock %}
