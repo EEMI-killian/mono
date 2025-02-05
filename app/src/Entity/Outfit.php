@@ -27,6 +27,9 @@ class Outfit
     #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'OutfitId')]
     private Collection $items;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $addAt = null;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -84,6 +87,18 @@ class Outfit
         if ($this->items->removeElement($item)) {
             $item->removeOutfitId($this);
         }
+
+        return $this;
+    }
+
+    public function getAddAt(): ?\DateTimeImmutable
+    {
+        return $this->addAt;
+    }
+
+    public function setAddAt(\DateTimeImmutable $addAt): static
+    {
+        $this->addAt = $addAt;
 
         return $this;
     }
