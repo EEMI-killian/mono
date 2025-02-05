@@ -6,6 +6,7 @@ use App\Repository\OutfitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: OutfitRepository::class)]
 class Outfit
@@ -29,6 +30,9 @@ class Outfit
 
     #[ORM\Column]
     private ?\DateTimeImmutable $addAt = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $promptResult = null;
 
     public function __construct()
     {
@@ -99,6 +103,18 @@ class Outfit
     public function setAddAt(\DateTimeImmutable $addAt): static
     {
         $this->addAt = $addAt;
+
+        return $this;
+    }
+
+    public function getPromptResult(): ?string
+    {
+        return $this->promptResult;
+    }
+
+    public function setPromptResult(string $promptResult): static
+    {
+        $this->promptResult = $promptResult;
 
         return $this;
     }

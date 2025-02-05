@@ -47,6 +47,7 @@ class AppFixtures extends Fixture
         $outfit->setName('Sporty outfit');
         $outfit->setImageUrl('https://via.placeholder.com/150');
         $outfit->setAddAt(new \DateTimeImmutable());
+        $outfit->setPromptResult("100% sporty outfit");
 
      
         $outfit->addItem($createdItems[0]);

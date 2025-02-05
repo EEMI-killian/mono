@@ -9,4 +9,9 @@
         {{ form_widget(form) }}
         <button class="btn">Save</button>
     {{ form_end(form) }}
+
+    {% if aiResponse %}
+        <h2>AI Response</h2>
+        <pre>{{ aiResponse|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+    {% endif %}
 {% endblock %}

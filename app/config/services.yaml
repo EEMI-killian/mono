@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     images_directory: '%kernel.project_dir%/public/uploads/images'
+    openai_api_key: '%env(OPENAI_API_KEY)%'
+    promptText: '%env(PROMPT_TEXT)%'
 
 services:
     # default configuration for services in *this* file
@@ -21,6 +23,14 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    Symfony\Contracts\HttpClient\HttpClientInterface: '@http_client'
+
+    # Register the OutfitController with the OpenAI API key
+    App\Controller\OutfitController:
+        arguments:
+            $openaiApiKey: '%openai_api_key%'
+            $promptText: '%promptText%'
 
             
 
