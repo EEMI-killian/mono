@@ -12,21 +12,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use App\Services\AiService;
+use App\Services\AiServiceInterface;
 
 #[Route('/outfit')]
 final class OutfitController extends AbstractController
 {
-    private HttpClientInterface $httpClient;
-    private string $openaiApiKey;
-    private string $promptText;
+    private AiServiceInterface $aiService;
 
-    public function __construct(HttpClientInterface $httpClient, string $openaiApiKey, string $promptText)
+    public function __construct(AiServiceInterface $aiService)
     {
-        $this->httpClient = $httpClient;
-        $this->openaiApiKey = $openaiApiKey;
-        $this->promptText = $promptText;
+        $this->aiService = $aiService;
     }
 
     #[Route(name: 'app_outfit_index', methods: ['GET'])]
@@ -68,8 +63,8 @@ final class OutfitController extends AbstractController
                 $imageData = file_get_contents($imagePath);
                 $base64Image = base64_encode($imageData);
 
-                $aiService = new AiService($this->httpClient, $this->openaiApiKey, $this->promptText);
-                $aiResponse = $aiService->analyseImage($base64Image);
+
+                $aiResponse = $this->aiService->analyseImage($base64Image);
             }
 
             if ($aiResponse === null) {

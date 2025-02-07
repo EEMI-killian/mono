@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use App\Services\AiServiceInterface;
 
 
-class AiService
+
+class AiService implements AiServiceInterface
 {
 
     private HttpClientInterface $httpClient;
