@@ -140,9 +140,13 @@ class Item
         return $this->material;
     }
 
-    public function setMaterial(string $material): static
+    public function setMaterial(?string $material): static
     {
         $this->material = $material;
+
+        return $this;
+    }
+
     public function getUserId(): ?User
     {
         return $this->userId;
