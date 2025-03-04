@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.firstName }} {{ user.lastName }} - Profil{% endblock %}
+
+{% block body %}
+<div class="min-h-screen flex flex-col bg-white">
+
+    <div class="p-6 flex flex-col items-center bg-gradient-to-b from-purple-600 to-purple-900 text-white">
+        <h1 class="mt-2 text-3xl sm:text-4xl font-bold">Profil de</h1>
+        <h2 class="mt-2 text-2xl sm:text-3xl font-bold">{{ user.firstName }} {{ user.lastName }}</h2>
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+        <button id="outfits-tab" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-black border-b-2 border-transparent hover:border-black">
+            Outfits
+        </button>
+        <button id="items-tab" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-black border-b-2 border-transparent hover:border-black">
+            Items
+        </button>
+    </div>
+
+    <div id="outfits-content" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        {% if user.outfit is not empty %}
+            {% for outfit in user.outfit %}
+            <div class="relative w-full h-72 sm:h-96 md:h-112">
+                <img src="{{ outfit.imageUrl }}" alt="{{ outfit.name }}" class="w-full h-full object-cover border border-black">
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center col-span-1 sm:col-span-2 md:col-span-3 text-gray-300">Aucun outfit disponible.</p>
+        {% endif %}
+    </div>
+
+    <div id="items-content" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <div class="flex justify-center col-span-1 sm:col-span-2 md:col-span-3 mt-4">
+            <input type="text" id="search-input" class="px-4 py-2 border border-gray-300 rounded" placeholder="Rechercher...">
+        </div>
+        {% if user.item is not empty %}
+            {% for item in user.item %}
+                <div class="bg-white/10 p-6 text-center item-card">
+                    <h2 class="text-xl sm:text-2xl font-semibold">{{ item.name }}</h2>
+                    <p class="text-lg">Marque: {{ item.brand }}</p>
+                    <p class="text-lg">Couleur: {{ item.color }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center col-span-1 sm:col-span-2 md:col-span-3 text-gray-300">Aucun item disponible.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.getElementById('outfits-tab').addEventListener('click', function() {
+        document.getElementById('outfits-content').classList.remove('hidden');
+        document.getElementById('items-content').classList.add('hidden');
+    });
+
+    document.getElementById('items-tab').addEventListener('click', function() {
+        document.getElementById('items-content').classList.remove('hidden');
+        document.getElementById('outfits-content').classList.add('hidden');
+    });
+
+    document.getElementById('search-input').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const items = document.querySelectorAll('.item-card');
+
+        items.forEach(function(item) {
+            const itemName = item.querySelector('h2').textContent.toLowerCase();
+            const itemBrand = item.querySelector('p:nth-child(2)').textContent.toLowerCase();
+            const itemColor = item.querySelector('p:nth-child(3)').textContent.toLowerCase();
+
+            if (itemName.includes(searchTerm) || itemBrand.includes(searchTerm) || itemColor.includes(searchTerm)) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+    });
+</script>
+{% endblock %}
