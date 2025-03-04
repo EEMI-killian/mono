@@ -1,5 +1,4 @@
 <?php
-// filepath: /Users/zahidikays/Desktop/4AWD/PEC/mono/app/src/Controller/RegistrationController.php
 
 namespace App\Controller;
 
@@ -27,20 +26,19 @@ class RegistrationController extends AbstractController
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
-            // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
             $user->setRoles(['ROLE_USER']);
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Authenticate the user
+
             return $userAuthenticator->authenticateUser(
                 $user,
                 $formLoginAuthenticator,
                 $request
             );
 
-            // Rediriger vers app_home
+
             return $this->redirectToRoute('app_home');
         }
 
