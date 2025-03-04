@@ -38,6 +38,8 @@ class Item
 
     #[ORM\Column(length: 255)]
     private ?string $material = null;
+    #[ORM\ManyToOne(inversedBy: 'item')]
+    private ?User $userId = null;
 
     public function __construct()
     {
@@ -141,6 +143,14 @@ class Item
     public function setMaterial(string $material): static
     {
         $this->material = $material;
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): static
+    {
+        $this->userId = $userId;
 
         return $this;
     }

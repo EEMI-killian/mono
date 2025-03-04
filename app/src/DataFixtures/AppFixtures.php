@@ -6,13 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Item;
 use App\Entity\Outfit;
-
-namespace App\DataFixtures;
-
-use App\Entity\Item;
-use App\Entity\Outfit;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
+use App\Entity\User;
 
 class AppFixtures extends Fixture
 {
@@ -30,7 +24,6 @@ class AppFixtures extends Fixture
             ['name' => 'shoes puma', 'brand' => 'Puma', 'color' => 'red', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'cotton'],
         ];
 
-
         $createdItems = [];
         foreach ($items as $itemData) {
             $newItem = new Item();
@@ -44,20 +37,49 @@ class AppFixtures extends Fixture
             $createdItems[] = $newItem;
         }
 
-
         $outfit = new Outfit();
         $outfit->setName('Sporty outfit');
         $outfit->setImageUrl('https://via.placeholder.com/150');
         $outfit->setAddAt(new \DateTimeImmutable());
         $outfit->setPromptResult("100% sporty outfit");
 
-
         $outfit->addItem($createdItems[0]);
         $outfit->addItem($createdItems[1]);
         $outfit->addItem($createdItems[2]);
 
         $manager->persist($outfit);
+        $userData = [
+            ['firstName' => 'John', 'lastName' => 'Doe', 'email' => 'john.doe@example.com'],
+            ['firstName' => 'Jane', 'lastName' => 'Doe', 'email' => 'jane.doe@example.com'],
+            ['firstName' => 'Jim', 'lastName' => 'Beam', 'email' => 'jim.beam@example.com'],
+            ['firstName' => 'Jack', 'lastName' => 'Daniels', 'email' => 'jack.daniels@example.com'],
+            ['firstName' => 'Jill', 'lastName' => 'Valentine', 'email' => 'jill.valentine@example.com'],
+        ];
 
+        foreach ($userData as $index => $data) {
+            $user = new User();
+            $user->setFirstName($data['firstName']);
+            $user->setLastName($data['lastName']);
+            $user->setEmail($data['email']);
+            $user->setPassword('password');
+
+            $userOutfit = new Outfit();
+            $userOutfit->setName('Outfit ' . ($index + 1));
+            $userOutfit->setImageUrl('https://via.placeholder.com/150');
+            $userOutfit->setAddAt(new \DateTimeImmutable());
+            $userOutfit->setPromptResult("Outfit " . ($index + 1) . " description");
+
+            $userOutfit->addItem($createdItems[$index * 2 % count($createdItems)]);
+            $userOutfit->addItem($createdItems[($index * 2 + 1) % count($createdItems)]);
+
+            $manager->persist($userOutfit);
+
+            $user->addOutfit($userOutfit);
+            $user->addItem($createdItems[($index * 2 + 2) % count($createdItems)]);
+            $user->addItem($createdItems[($index * 2 + 3) % count($createdItems)]);
+
+            $manager->persist($user);
+        }
 
         $manager->flush();
     }
