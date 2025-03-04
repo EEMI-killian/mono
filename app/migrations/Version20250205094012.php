@@ -7,9 +7,6 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 final class Version20250205094012 extends AbstractMigration
 {
     public function getDescription(): string
@@ -19,7 +16,6 @@ final class Version20250205094012 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE item (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL, brand VARCHAR(255) NOT NULL, color VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE item_outfit (item_id INT NOT NULL, outfit_id INT NOT NULL, PRIMARY KEY(item_id, outfit_id))');
         $this->addSql('CREATE INDEX IDX_B4FBE3CE126F525E ON item_outfit (item_id)');
@@ -46,7 +42,6 @@ final class Version20250205094012 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE item_outfit DROP CONSTRAINT FK_B4FBE3CE126F525E');
         $this->addSql('ALTER TABLE item_outfit DROP CONSTRAINT FK_B4FBE3CEAE96E385');

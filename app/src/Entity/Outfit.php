@@ -34,6 +34,9 @@ class Outfit
     #[ORM\Column(type: Types::TEXT)]
     private ?string $promptResult = null;
 
+    #[ORM\ManyToOne(inversedBy: 'outfit')]
+    private ?User $userId = null;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -115,6 +118,18 @@ class Outfit
     public function setPromptResult(string $promptResult): static
     {
         $this->promptResult = $promptResult;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): static
+    {
+        $this->userId = $userId;
 
         return $this;
     }
