@@ -32,5 +32,8 @@ services:
             $openaiApiKey: "%openai_api_key%"
             $promptText: "%promptText%"
 
+    Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator:
+        alias: security.authenticator.form_login.main
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
