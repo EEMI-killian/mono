@@ -33,6 +33,12 @@ class Item
     #[ORM\ManyToMany(targetEntity: Outfit::class, inversedBy: 'items')]
     private Collection $OutfitId;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $fit = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $material = null;
+
     public function __construct()
     {
         $this->OutfitId = new ArrayCollection();
@@ -111,6 +117,30 @@ class Item
     public function removeOutfitId(Outfit $outfitId): static
     {
         $this->OutfitId->removeElement($outfitId);
+
+        return $this;
+    }
+
+    public function getFit(): ?string
+    {
+        return $this->fit;
+    }
+
+    public function setFit(?string $fit): static
+    {
+        $this->fit = $fit;
+
+        return $this;
+    }
+
+    public function getMaterial(): ?string
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(string $material): static
+    {
+        $this->material = $material;
 
         return $this;
     }

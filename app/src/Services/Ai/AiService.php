@@ -86,8 +86,6 @@ class AiService implements AiServiceInterface
             throw new \Exception('AI request failed');
         }
 
-
-
         $content = $response->toArray();
         return $content['choices'][0]['message']['content'];
     }

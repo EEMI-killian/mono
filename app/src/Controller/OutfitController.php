@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Outfit;
+use App\Entity\Item;
 use App\Form\OutfitType;
 use App\Repository\OutfitRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -73,6 +74,22 @@ final class OutfitController extends AbstractController
 
             $outfit->setPromptResult($aiResponse);
             $outfit->setAddAt(new \DateTimeImmutable());
+
+            $data = json_decode($aiResponse, true);
+            var_dump($data);
+
+            foreach ($data['items'] as $itemData) {
+                $item = new Item();
+                $item->setName($itemData['name'] ?? null);
+                $item->setBrand($itemData['brand'] ?? null);
+                $item->setColor($itemData['color'] ?? null);
+                $item->setFit($itemData['fit'] ?? null);
+                $item->setType($itemData['type'] ?? null);
+                $item->setMaterial($itemData['material'] ?? null);
+
+
+                $entityManager->persist($item);
+            }
 
             $entityManager->persist($outfit);
             $entityManager->flush();
