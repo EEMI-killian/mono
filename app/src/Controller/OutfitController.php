@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use App\Services\AiServiceInterface;
+use App\Services\Ai\AiServiceInterface;
 
 #[Route('/outfit')]
 final class OutfitController extends AbstractController

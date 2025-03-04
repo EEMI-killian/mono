@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Ai;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use App\Services\AiServiceInterface;
+use App\Services\Ai\AiServiceInterface;
 
 
 
