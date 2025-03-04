@@ -9,6 +9,7 @@ use App\Entity\Outfit;
 use App\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+
 class AppFixtures extends Fixture
 {
     private $passwordHasher;
@@ -68,6 +69,7 @@ class AppFixtures extends Fixture
             $user->setFirstName($data['firstName']);
             $user->setLastName($data['lastName']);
             $user->setEmail($data['email']);
+
             $hashedPassword = $this->passwordHasher->hashPassword($user, 'password');
             $user->setPassword($hashedPassword);
 
@@ -76,6 +78,7 @@ class AppFixtures extends Fixture
             $userOutfit->setImageUrl('https://via.placeholder.com/150');
             $userOutfit->setAddAt(new \DateTimeImmutable());
             $userOutfit->setPromptResult("Outfit " . ($index + 1) . " description");
+
 
             $userOutfit->addItem($createdItems[$index * 2 % count($createdItems)]);
             $userOutfit->addItem($createdItems[($index * 2 + 1) % count($createdItems)]);
