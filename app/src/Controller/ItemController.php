@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/item')]
 final class ItemController extends AbstractController
@@ -50,25 +51,27 @@ final class ItemController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Item $item, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(Item1Type::class, $item);
-        $form->handleRequest($request);
+    // #[Route('/{id}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
+    // #[IsGranted('EDIT', subject: 'item')]
+    // public function edit(Request $request, Item $item, EntityManagerInterface $entityManager): Response
+    // {
+    //     $form = $this->createForm(Item1Type::class, $item);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_item_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_item_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('item/edit.html.twig', [
-            'item' => $item,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('item/edit.html.twig', [
+    //         'item' => $item,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'app_item_delete', methods: ['POST'])]
+    #[IsGranted('DELETE', subject: 'item')]
     public function delete(Request $request, Item $item, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$item->getId(), $request->getPayload()->getString('_token'))) {

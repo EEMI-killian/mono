@@ -39,11 +39,15 @@
                         <img src="{{ outfit.imageUrl }}" alt="{{ outfit.name }}" class="w-full h-full object-cover border border-black">
                     </a>
                     <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 flex justify-between items-center">
+                    {% if is_granted('EDIT', outfit) %}
                         <a href="{{ path('app_outfit_edit', {'id': outfit.id}) }}" class="text-blue-500 hover:text-blue-700">Éditer</a>
+                    {% endif %}
+                    {% if is_granted('DELETE', outfit) %}
                         <form method="post" action="{{ path('app_outfit_delete', {'id': outfit.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tenue ?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ outfit.id) }}">
                             <button class="text-red-500 hover:text-red-700">Supprimer</button>
                         </form>
+                    {% endif %}
                     </div>
                     
                 </div>
@@ -71,11 +75,15 @@
                 {% endif %}
             </div>
                     <div class="mt-2 flex justify-between items-center">
+                    {% if is_granted('EDIT', item) %}
                         <a href="{{ path('app_item_edit', {'id': item.id, 'itemId': item.id}) }}" class="text-blue-500 hover:text-blue-700">Éditer</a>
+                    {% endif %}
+                        {% if is_granted('DELETE', item) %}
                         <form method="post" action="{{ path('app_item_delete', {'id': item.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet item ?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
                             <button class="text-red-500 hover:text-red-700">Supprimer</button>
                         </form>
+                    {% endif %}
                     </div>
                 </div>
             {% endfor %}

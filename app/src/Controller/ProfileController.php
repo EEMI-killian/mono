@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Item;
 use App\Form\ItemType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfileController extends AbstractController
 {
@@ -46,6 +47,7 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/profile/item/edit/{id}', name: 'app_item_edit')]
+    #[IsGranted('EDIT', subject: 'item')]
     public function editItem(Request $request, Item $item, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ItemType::class, $item);
