@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Services\Ai\AiServiceInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Services\Image\ImageServiceInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/outfit')]
 final class OutfitController extends AbstractController
@@ -109,6 +110,7 @@ final class OutfitController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_outfit_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('EDIT', subject: 'outfit')]
     public function edit(Request $request, Outfit $outfit, EntityManagerInterface $entityManager, UserInterface $user, SluggerInterface $slugger): Response
     {
         if ($outfit->getUserId() !== $user) {
@@ -161,30 +163,32 @@ final class OutfitController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/item/{itemId}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
-    public function editItem(Request $request, Outfit $outfit, Item $item, EntityManagerInterface $entityManager, UserInterface $user): Response
-    {
-        if ($outfit->getUserId() !== $user || $item->getUserId() !== $user) {
-            throw $this->createAccessDeniedException('You do not have permission to edit this item.');
-        }
+    // #[Route('/{id}/item/{itemId}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
+    // #[IsGranted('EDIT', subject: 'item')]
+    // public function editItem(Request $request, Outfit $outfit, Item $item, EntityManagerInterface $entityManager, UserInterface $user): Response
+    // {
+    //     if ($outfit->getUserId() !== $user || $item->getUserId() !== $user) {
+    //         throw $this->createAccessDeniedException('You do not have permission to edit this item.');
+    //     }
 
-        $form = $this->createForm(ItemType::class, $item);
-        $form->handleRequest($request);
+    //     $form = $this->createForm(ItemType::class, $item);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_outfit_show', ['id' => $outfit->getId()], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_outfit_show', ['id' => $outfit->getId()], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('item/edit.html.twig', [
-            'item' => $item,
-            'form' => $form,
-            'outfit' => $outfit,
-        ]);
-    }
+    //     return $this->render('item/edit.html.twig', [
+    //         'item' => $item,
+    //         'form' => $form,
+    //         'outfit' => $outfit,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'app_outfit_delete', methods: ['POST'])]
+    #[IsGranted('DELETE', subject: 'outfit')]
     public function delete(Request $request, Outfit $outfit, EntityManagerInterface $entityManager, UserInterface $user): Response
     {
         if ($outfit->getUserId() !== $user) {

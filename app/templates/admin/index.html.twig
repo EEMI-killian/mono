@@ -82,8 +82,11 @@
                     <td class="py-3 px-4 border-b">{{ outfit.promptResult }}</td>
                     <td class="py-3 px-4 border-b">
                         <div class="flex space-x-2">
+
                             <a href="{{ path('app_outfit_show', {'id': outfit.id}) }}" class="text-blue-500 hover:underline">Voir</a>
+                            {% if is_granted('EDIT', outfit) %}
                             <a href="{{ path('app_outfit_edit', {'id': outfit.id}) }}" class="text-blue-500 hover:underline">Modifier</a>
+                            {% endif %}
                         </div>
                     </td>
                     </tr>
@@ -133,7 +136,9 @@
                     <td class="py-3 px-4 border-b">
                         <div class="flex space-x-2">
                             <a href="{{ path('app_item_show', {'id': item.id}) }}" class="text-blue-500 hover:underline">Voir</a>
+                            {% if is_granted('EDIT', item) %}
                             <a href="{{ path('app_item_edit', {'id': item.id}) }}" class="text-blue-500 hover:underline">Modifier</a>
+                            {% endif %}
                         </div>
                     </td>
                     </tr>

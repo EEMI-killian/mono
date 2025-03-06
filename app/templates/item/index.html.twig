@@ -32,7 +32,15 @@
                 <td>{{ item.isPublic ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_item_show', {'id': item.id}) }}">show</a>
+                    {% if is_granted('EDIT', item) %}
                     <a href="{{ path('app_item_edit', {'id': item.id}) }}">edit</a>
+                    {% endif %}
+                    {% if is_granted('DELETE', item) %}
+                    <form method="post" action="{{ path('app_item_delete', {'id': item.id}) }}" onsubmit="return confirm('Are you sure?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+                        <button type="submit">delete</button>   
+                    </form>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
