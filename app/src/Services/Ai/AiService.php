@@ -183,4 +183,43 @@ A global outfit analysis, identifying the overall style (e.g., 'casual', 'sporty
         return $content['choices'][0]['message']['content'];
     }
 
+    public function generateSuggestionAdminDashboard(string $field, string $type, int $id): string
+    {
+        $messages = [
+            "user" => "L'utilisateur ID {$id} a un champ '{$field}' manquant. Pouvez-vous suggérer une valeur appropriée pour ce champ?",
+            "outfit" => "L'outfit ID {$id} a un champ '{$field}' manquant. Pouvez-vous suggérer une valeur appropriée pour ce champ?",
+            "item" => "L'item ID {$id} a un champ '{$field}' manquant. Pouvez-vous suggérer une valeur appropriée pour ce champ?",
+        ];
+
+        $prompt = $messages[$type] ?? "Problème détecté sur {$type} ID {$id}. Pouvez-vous suggérer une valeur appropriée pour le champ '{$field}' en fonction des colonnes existantes (par exemple, marque, couleur, type, coupe, matière, etc.)?";
+
+        $response = $this->httpClient->request(
+            'POST',
+            'https://api.openai.com/v1/chat/completions',
+            [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => "Bearer {$this->openaiApiKey}",
+            ],
+            'json' => [
+                'model' => 'gpt-4o-2024-08-06',
+                'messages' => [
+                [
+                    'role' => 'user',
+                    'content' => $prompt
+                ]
+                ],
+                'max_tokens' => 75
+            ]
+            ]
+        );
+
+        if ($response->getStatusCode() !== 200) {
+            throw new \Exception('AI request failed');
+        }
+
+        $content = $response->toArray();
+        return $content['choices'][0]['message']['content'];
+    }
+
 }
