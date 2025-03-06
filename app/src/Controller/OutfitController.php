@@ -56,7 +56,6 @@ final class OutfitController extends AbstractController
                 $outfit->setImageUrl('/uploads/images/' . $uploadedFilePath);
 
                 $base64Image = $this->imageService->convertImageToBase64($uploadedFilePath);
-                dump($base64Image);
 
                 $aiResponse = $this->aiService->analyseImage($base64Image);
             }
