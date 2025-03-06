@@ -3,37 +3,68 @@
 {% block title %}Outfit{% endblock %}
 
 {% block body %}
-    <h1>Outfit</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ outfit.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ outfit.name }}</td>
-            </tr>
-            <tr>
-                <th>ImageUrl</th>
-                <td>{{ outfit.imageUrl }}</td>
-            </tr>
-            <tr>
-                <th>AddAt</th>
-                <td>{{ outfit.addAt ? outfit.addAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-            <th>PromptResult</th>
-            <td>{{ outfit.promptResult }}</td>
-            </tr>
-
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_outfit_index') }}">back to list</a>
-
-    <a href="{{ path('app_outfit_edit', {'id': outfit.id}) }}">edit</a>
-
-    {{ include('outfit/_delete_form.html.twig') }}
+<section class="mx-auto">
+  <div class="container bg-white rounded-lg shadow-md p-6">
+    <div class="flex flex-col gap-6">
+      <div class="grid grid-cols-1 items-stretch gap-x-0 gap-y-4 lg:grid-cols-3 lg:gap-4">
+        <img src="{{ outfit.imageUrl }}" alt="{{ outfit.name }}" class="w-full rounded-md object-cover lg:h-auto" />
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm col-span-2 flex items-center justify-center p-6">
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col items-start">
+              <p>{{ outfit.name }}</p>
+              <p>{{ outfit.userId.firstname }} {{ outfit.userId.lastname }}</p>
+              <p class="text-zinc-600">{{ outfit.addAt ? outfit.addAt|date('Y-m-d H:i:s') : '' }}</p>
+              <p class="text-sm">{{ outfit.isPublic ? 'Public' : 'Private' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        {% for item in outfit.items %}
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+          <div class="p-6 px-6 pt-6 ">
+            <q>{{ item.name }}</q>
+          </div>
+          <div class="flex items-center p-6 pt-0">
+            <div class="flex gap-4 leading-5">
+              <div class="text-sm">
+              {% if item.partnerUrl is not empty %}
+            <a href="{{ item.partnerUrl }}" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition" target="_blank">Acheter</a>
+        {% else %}
+            <p class="text-gray-500">Pas de lien disponible</p>
+        {% endif %}    
+            <p class="font-medium"> name: {{ item.name }} color: {{ item.color }} brand: {{ item.brand }}  fit: {{ item.fit }}</p>
+              </div>
+            </div>
+          </div>
+          {% if item.userId == app.user %}
+          <div class="flex justify-between p-6 pt-0">
+            <a href="{{ path('app_item_edit', {'id': item.id}) }}" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">Edit</a>
+            <form method="post" action="{{ path('app_item_delete', {'id': item.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+              <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+              <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">Delete</button>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="mt-6 flex justify-between">
+        {% if app.request.query.get('from') == 'social' %}
+            <a href="{{ path('app_social') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Back to feed</a>
+        {% elseif app.request.query.get('from') == 'profile' %}
+            <a href="{{ path('app_profile') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Back to profile</a>
+        {% endif %}
+        {% if outfit.userId == app.user %}
+        <a href="{{ path('app_outfit_edit', {'id': outfit.id}) }}" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">Edit</a>
+        {% endif %}
+    </div>
+    <div class="mt-4">
+        {% if outfit.userId == app.user %}
+        {{ include('outfit/_delete_form.html.twig') }}
+        {% endif %}
+    </div>
+  </div>
+</section>
 {% endblock %}

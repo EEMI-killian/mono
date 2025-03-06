@@ -37,9 +37,19 @@ class Outfit
     #[ORM\ManyToOne(inversedBy: 'outfit')]
     private ?User $userId = null;
 
+    #[ORM\Column]
+    private ?bool $isPublic = false;
+
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'outfit')]
+    private Collection $likes;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,5 +142,62 @@ class Outfit
         $this->userId = $userId;
 
         return $this;
+    }
+
+    public function isPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
+
+    public function setIsPublic(bool $isPublic): self
+    {
+        $this->isPublic = $isPublic;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setOutfit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getOutfit() === $this) {
+                $like->setOutfit(null);
+            }
+        }
+
+        return $this;
+    }
+    public function getLikesCount(): int
+    {
+        return $this->likes->count();
+    }
+
+    public function isLikedByUser(User $user): bool
+    {
+        foreach ($this->likes as $like) {
+            if ($like->getUserId() === $user) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

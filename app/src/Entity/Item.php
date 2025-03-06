@@ -41,9 +41,22 @@ class Item
     #[ORM\ManyToOne(inversedBy: 'item')]
     private ?User $userId = null;
 
+    #[ORM\Column]
+    private ?bool $isPublic = false;
+
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'item')]
+    private Collection $likes;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $partnerUrl = null;
+
     public function __construct()
     {
         $this->OutfitId = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,7 +105,7 @@ class Item
         return $this->type;
     }
 
-    public function setType(string $type): static
+    public function setType(string $type): self
     {
         $this->type = $type;
 
@@ -155,6 +168,71 @@ class Item
     public function setUserId(?User $userId): static
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function isPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
+
+    public function setIsPublic(bool $isPublic): static
+    {
+        $this->isPublic = $isPublic;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getItem() === $this) {
+                $like->setItem(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isLikedByUser(User $user): bool
+    {
+        foreach ($this->likes as $like) {
+            if ($like->getUserId() === $user) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function getPartnerUrl(): ?string
+    {
+        return $this->partnerUrl;
+    }
+
+    public function setPartnerUrl(?string $partnerUrl): static
+    {
+        $this->partnerUrl = $partnerUrl;
 
         return $this;
     }
