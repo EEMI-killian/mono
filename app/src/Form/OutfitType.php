@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class OutfitType extends AbstractType
 {
@@ -22,6 +23,9 @@ class OutfitType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
+                    new NotNull([
+                        'message' => 'Please upload an image file',
+                    ]),
                     new File([
                         'maxSize' => '5M',
                         'mimeTypes' => [
@@ -30,13 +34,13 @@ class OutfitType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'Please upload a valid image file (JPEG or PNG)',
                     ])
-                    ],
-                ])
-                ->add('isPublic', null, [
-                    'label' => 'Rendre publique',
-                ])
-                
-            ;
+                ],
+            ])
+            ->add('isPublic', null, [
+                'label' => 'Rendre publique',
+            ])
+
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
