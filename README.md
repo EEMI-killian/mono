@@ -77,13 +77,13 @@ npm run watch (lancer la compilation Tailwind)
 | Nom | GitHub |
 |------|--------|
 | Killian Angely | [@KillianAngely] |
-| Kays Zahidy | [@monkeyDkz] |
+| Kays Zahidi | [@monkeyDkz] |
 | Alexis Menez | [@Alexmz1] |
 
 ### 📌 Qui a fait quoi ?  
-- **Back-end** : Killian Angely, Kays Zahidy, Alexis Menez  
-- **Front-end** : Killian Angely, Kays Zahidy, Alexis Menez  
-- **IA & analyse d’image** : Killian Angely, Kays Zahidy, Alexis Menez   
+- **Back-end** : Killian Angely, Kays Zahidi, Alexis Menez  
+- **Front-end** : Killian Angely, Kays Zahidi, Alexis Menez  
+- **IA & analyse d’image** : Killian Angely, Kays Zahidi, Alexis Menez   
 - **Intégration & mise en production** : Killian Angely
 
 
