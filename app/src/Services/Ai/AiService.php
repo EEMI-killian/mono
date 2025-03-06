@@ -39,7 +39,26 @@ class AiService implements AiServiceInterface
                         [
                             'role' => 'user',
                             'content' => [
-                                ['type' => 'text', 'text' => $this->promptText],
+                                ['type' => 'text', 'text' => "Analyze the given image and provide an in-depth description of the outfit worn by the person(s) present, including clothing, footwear, and accessories. Focus only on the outfit, without describing the general scene or background.
+
+For each detected item (clothing, footwear, accessories), return the following information in JSON format:
+
+category: The general category of the item (e.g., 'clothing', 'footwear', 'accessory').
+type: The specific type of item (e.g., 't-shirt', 'pants', 'jacket', 'sneakers', 'watch', 'hat', 'backpack', 'gloves', etc.).
+color: The main color of the detected item, or null if not identifiable.
+brand: The brand of the item if visible, or null if no brand is detected.
+material: The fabric or material of the item (e.g., 'cotton', 'denim', 'leather', 'wool', 'metal', 'synthetic'), or null if not identifiable.
+fit: The style or fit of the clothing item (e.g., 'oversized', 'slim fit', 'baggy', 'cropped', 'regular fit'), or null if not applicable.
+length: The length of the item (e.g., 'short', 'medium', 'long', 'ankle-length', 'waist-length'), or null if not applicable.
+closure: The type of closure or fastening mechanism (e.g., 'zipper', 'buttons', 'laces', 'slip-on', 'buckle', 'elastic'), or null if not applicable.
+condition: The apparent condition of the item (e.g., 'new', 'worn', 'vintage', 'distressed', 'faded'), or null if not identifiable.
+extra_details: Additional notable features such as logos, text, embroidery, visible design elements, or unique characteristics (e.g., 'Nike logo on the chest', 'gold buckle', 'silver chain', 'zippered pockets').
+If multiple items are present, list each item individually with its respective attributes. If no items are detected, return an empty object {}.
+
+Additionally, provide:
+
+A structured and detailed textual summary of the outfit, listing the items in a logical order (upper body, lower body, footwear, accessories). This should include details about the combination of items, their fit, materials, colors, and how they work together.
+A global outfit analysis, identifying the overall style (e.g., 'casual', 'sporty', 'streetwear', 'formal', 'vintage', 'minimalist') and how the different elements contribute to that aesthetic."],
                                 ['type' => 'image_url', 'image_url' => ['url' => "data:image/jpeg;base64,{$base64Image}"]]
                             ]
                         ]
