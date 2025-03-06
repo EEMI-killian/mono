@@ -5,13 +5,21 @@
 {% block body %}
 <div class="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
     <h1 class="text-2xl font-bold mb-4">Tenues et Items Publiques</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <div class="flex justify-center col-span-1 sm:col-span-2 md:col-span-3 mt-4">
+        <input type="text" id="search-input" class="px-4 py-2 border border-gray-300 rounded" placeholder="Rechercher..." oninput="filterOutfits()">
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="outfit-list">
         {% for outfit in outfits %}
-        <div class="block bg-gray-100 p-4 rounded-lg shadow-md hover:bg-gray-200 transition">
+        <div class="outfit-item block bg-gray-100 p-4 rounded-lg shadow-md hover:bg-gray-200 transition" 
+            data-name="{{ outfit.name | lower }}">
+            
             <a href="{{ path('app_outfit_show', {'id': outfit.id, 'from': 'social'}) }}">
                 <h2 class="text-xl font-semibold mb-2">{{ outfit.name }}</h2>
                 <img src="{{ outfit.imageUrl }}" alt="{{ outfit.name }}" class="w-full h-48 object-cover rounded-lg mb-4">
             </a>
+
             <div class="mt-4 flex items-center justify-between">
                 <span id="likes-count-{{ outfit.id }}" class="text-gray-600 dark:text-gray-400">
                     👍 {{ outfit.likes|length }} Likes
@@ -20,6 +28,7 @@
                     Like ❤️
                 </button>
             </div>
+
             {% if app.user %}
             <div class="mt-4 flex justify-between">
                 <form method="post" action="{{ path('app_outfit_add_to_user', {'id': outfit.id}) }}">
@@ -27,6 +36,17 @@
                 </form>
             </div>
             {% endif %}
+
+            <div class="items-info" style="display: none;">
+                {% for item in outfit.items %}
+                    <span class="item-name" data-name="{{ item.name | lower }}">{{ item.name }}</span>
+                    <span class="item-brand" data-brand="{{ item.brand | lower }}">{{ item.brand }}</span>
+                    <span class="item-color" data-color="{{ item.color | lower }}">{{ item.color }}</span>
+                    <span class="item-type" data-type="{{ item.type | lower }}">{{ item.type }}</span>
+                    <span class="item-fit" data-fit="{{ item.fit | lower }}">{{ item.fit }}</span>
+                    <span class="item-material" data-material="{{ item.material | lower }}">{{ item.material }}</span>
+                {% endfor %}
+            </div>
         </div>
         {% endfor %}
     </div>
@@ -58,6 +78,37 @@
             }
         })
         .catch(error => console.error('Error:', error));
+    }
+
+    function filterOutfits() {
+        const searchInput = document.getElementById('search-input').value.toLowerCase();
+        const outfits = document.querySelectorAll('.outfit-item');
+        
+        outfits.forEach(outfit => {
+            const outfitName = outfit.getAttribute('data-name');
+            const itemNames = outfit.querySelectorAll('.item-name');
+            const itemDescriptions = outfit.querySelectorAll('.item-description');
+            
+            let match = outfitName.includes(searchInput);
+
+            itemNames.forEach(item => {
+                if (item.getAttribute('data-name').includes(searchInput)) {
+                    match = true;
+                }
+            });
+
+            itemDescriptions.forEach(item => {
+                if (item.getAttribute('data-description').includes(searchInput)) {
+                    match = true;
+                }
+            });
+
+            if (match) {
+                outfit.style.display = '';
+            } else {
+                outfit.style.display = 'none';
+            }
+        });
     }
 </script>
 {% endblock %}
