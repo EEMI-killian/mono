@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
             );
 
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_social');
         }
 
         return $this->render('registration/register.html.twig', [
