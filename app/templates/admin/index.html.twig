@@ -1,0 +1,243 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard admin{% endblock %}
+
+{% block body %}
+<div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-purple-600 to-purple-800 px-6 py-12">
+    <h1 class="text-3xl font-bold text-white mb-8 text-center">Dashboard admin</h1>
+
+    <div class="w-full max-w-4xl">
+        <input type="checkbox" id="users-accordion" class="peer hidden">
+        <label for="users-accordion" class="flex justify-between items-center bg-purple-700 text-white text-lg font-semibold px-4 py-3 rounded-lg cursor-pointer peer-checked:bg-purple-800">
+            Tous les utilisateurs
+            <svg class="transform transition-transform peer-checked:rotate-180 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </label>
+        <div class="hidden peer-checked:block bg-white p-4 rounded-lg border border-gray-300 overflow-x-auto">
+            <input type="text" placeholder="Rechercher" id="user-search-input" class="w-full p-3 rounded-lg border border-gray-300 mb-4">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="py-3 px-4 border-b text-left">Id</th>
+                        <th class="py-3 px-4 border-b text-left">Email</th>
+                        <th class="py-3 px-4 border-b text-left">Roles</th>
+                        <th class="py-3 px-4 border-b text-left">Prénom</th>
+                        <th class="py-3 px-4 border-b text-left">Nom</th>
+                        <th class="py-3 px-4 border-b text-left">Password</th>
+                        <th class="py-3 px-4 border-b text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="user-table-body">
+                {% for user in users %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-3 px-4 border-b">{{ user.id }}</td>
+                        <td class="py-3 px-4 border-b">{{ user.email }}</td>
+                        <td class="py-3 px-4 border-b">{{ user.roles ? user.roles|json_encode : '' }}</td>
+                        <td class="py-3 px-4 border-b">{{ user.firstName }}</td>
+                        <td class="py-3 px-4 border-b">{{ user.lastName }}</td>
+                        <td class="py-3 px-4 border-b">{{ user.password|slice(0, 8) ~ '...' }}</td>
+                        <td class="py-3 px-4 border-b">
+                            <div class="flex space-x-2">
+                                <a href="{{ path('app_admin_show', {'id': user.id}) }}" class="text-blue-500 hover:underline">Voir</a>
+                                <a href="{{ path('app_admin_edit', {'id': user.id}) }}" class="text-blue-500 hover:underline">Modifier</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="py-3 px-4 border-b text-center">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-8">
+            <input type="checkbox" id="outfits-accordion" class="peer hidden">
+            <label for="outfits-accordion" class="flex justify-between items-center bg-purple-700 text-white text-lg font-semibold px-4 py-3 rounded-lg cursor-pointer peer-checked:bg-purple-800">
+                Tous les outfits
+                <svg class="transform transition-transform peer-checked:rotate-180 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </label>
+            <div class="hidden peer-checked:block bg-white p-4 rounded-lg border border-gray-300 overflow-x-auto">
+                <input type="text" placeholder="Rechercher" id="outfit-search-input" class="w-full p-3 rounded-lg border border-gray-300 mb-4">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <thead class="bg-gray-100">
+                    <tr>
+                    <th class="py-3 px-4 border-b text-left">Id</th>
+                    <th class="py-3 px-4 border-b text-left">Nom</th>
+                    <th class="py-3 px-4 border-b text-left">Image</th>
+                    <th class="py-3 px-4 border-b text-left">Description</th>
+                    <th class="py-3 px-4 border-b text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="outfit-table-body">
+                {% for outfit in outfits %}
+                    <tr class="hover:bg-gray-50">
+                    <td class="py-3 px-4 border-b">{{ outfit.id }}</td>
+                    <td class="py-3 px-4 border-b">{{ outfit.name }}</td>
+                    <td class="py-3 px-4 border-b">{{ outfit.imageUrl }}</td>
+                    <td class="py-3 px-4 border-b">{{ outfit.promptResult }}</td>
+                    <td class="py-3 px-4 border-b">
+                        <div class="flex space-x-2">
+                            <a href="{{ path('app_outfit_show', {'id': outfit.id}) }}" class="text-blue-500 hover:underline">Voir</a>
+                            <a href="{{ path('app_outfit_edit', {'id': outfit.id}) }}" class="text-blue-500 hover:underline">Modifier</a>
+                        </div>
+                    </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                    <td colspan="5" class="py-3 px-4 border-b text-center">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <input type="checkbox" id="items-accordion" class="peer hidden">
+            <label for="items-accordion" class="flex justify-between items-center bg-purple-700 text-white text-lg font-semibold px-4 py-3 rounded-lg cursor-pointer peer-checked:bg-purple-800">
+                Tous les items
+                <svg class="transform transition-transform peer-checked:rotate-180 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </label>
+            <div class="hidden peer-checked:block bg-white p-4 rounded-lg border border-gray-300 overflow-x-auto">
+                <input type="text" placeholder="Rechercher" id="item-search-input" class="w-full p-3 rounded-lg border border-gray-300 mb-4">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <thead class="bg-gray-100">
+                    <tr>
+                    <th class="py-3 px-4 border-b text-left">Id</th>
+                    <th class="py-3 px-4 border-b text-left">Nom</th>
+                    <th class="py-3 px-4 border-b text-left">Marque</th>
+                    <th class="py-3 px-4 border-b text-left">Couleur</th>
+                    <th class="py-3 px-4 border-b text-left">Type</th>
+                    <th class="py-3 px-4 border-b text-left">Coupe</th>
+                    <th class="py-3 px-4 border-b text-left">Matière</th>
+                    <th class="py-3 px-4 border-b text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="item-table-body">
+                {% for item in items %}
+                    <tr class="hover:bg-gray-50">
+                    <td class="py-3 px-4 border-b">{{ item.id }}</td>
+                    <td class="py-3 px-4 border-b">{{ item.name }}</td>
+                    <td class="py-3 px-4 border-b">{{ item.brand }}</td>
+                    <td class="py-3 px-4 border-b">{{ item.color }}</td>
+                    <td class="py-3 px-4 border-b">{{ item.type }}</td>
+                    <td class="py-3 px-4 border-b">{{ item.fit }}</td>
+                    <td class="py-3 px-4 border-b">{{ item.material }}</td>
+                    <td class="py-3 px-4 border-b">
+                        <div class="flex space-x-2">
+                            <a href="{{ path('app_item_show', {'id': item.id}) }}" class="text-blue-500 hover:underline">Voir</a>
+                            <a href="{{ path('app_item_edit', {'id': item.id}) }}" class="text-blue-500 hover:underline">Modifier</a>
+                        </div>
+                    </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                    <td colspan="7" class="py-3 px-4 border-b text-center">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4 text-white">Répartition des marques des items</h2>
+        <div class="mb-4 text-white">
+            {% set brandCounts = {} %}
+            {% for item in items %}
+            {% set brand = item.brand|trim|lower %}
+            {% if brandCounts[brand] is defined %}
+            {% set brandCounts = brandCounts|merge({(brand): brandCounts[brand] + 1}) %}
+            {% else %}
+            {% set brandCounts = brandCounts|merge({(brand): 1}) %}
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="w-full max-w-4xl mx-auto">
+            <canvas id="brandChart" width="400" height="400"></canvas>
+        </div>
+        
+        </div>
+    </div>
+</div>
+
+{% include 'parts/navbar.html.twig' %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function setupTableSearch(inputId, tableBodyId) {
+        document.getElementById(inputId).addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll(`#${tableBodyId} tr`);
+        
+            rows.forEach(function(row) {
+                const cells = row.querySelectorAll('td');
+                let rowMatches = false;
+        
+                cells.forEach(function(cell) {
+                    if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                        rowMatches = true;
+                    }
+                });
+        
+                if (rowMatches) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+        });
+    }
+    
+    setupTableSearch('user-search-input', 'user-table-body');
+    setupTableSearch('outfit-search-input', 'outfit-table-body');
+    setupTableSearch('item-search-input', 'item-table-body');
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('brandChart').getContext('2d');
+        const brandCounts = {{ brandCounts|json_encode|raw }};
+        const labels = Object.keys(brandCounts).map(brand => brand.charAt(0).toUpperCase() + brand.slice(1));
+        const data = Object.values(brandCounts);
+
+        new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+            label: 'Nombre d\'items',
+            data: data,
+            backgroundColor: ['#A78BFA', '#C084FC', '#D8B4FE', '#E9D5FF', '#F3E8FF', '#C4B5FD', '#A78BFA', '#8B5CF6', '#7C3AED', '#6D28D9'],
+            borderColor: 'transparent',
+            borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    color: 'white' 
+                }
+            },
+            tooltip: {
+                callbacks: {
+                label: function(tooltipItem) {
+                    return tooltipItem.label + ': ' + tooltipItem.raw + ' items';
+                }
+                }
+            }
+            }
+        }
+        });
+    });
+</script>
+{% endblock %}
