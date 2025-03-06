@@ -26,3 +26,6 @@
 
 # Ignore images uploaded to the public/uploads/images directory
 /public/uploads/images/
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
