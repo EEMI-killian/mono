@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suggestions de Tenues{% endblock %}
+
+{% block body %}
+<div class="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-4">Suggestions de Tenues</h1>
+
+    <form method="get" action="{{ path('app_ai_suggestions') }}">
+        <div>
+            <label for="userInput">Vos suggestions :</label>
+            <input type="text" id="userInput" name="userInput" placeholder="Entrez vos suggestions ici" class="border p-2 rounded w-full">
+        </div>
+        <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Générer des suggestions</button>
+    </form>
+
+    {# {% if suggestions is defined and suggestions is not empty %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {% for outfit in suggestions %}
+            <div class="block bg-gray-100 p-4 rounded-lg shadow-md hover:bg-gray-200 transition">
+                <h2 class="text-xl font-semibold mb-2">{{ outfit.name }}</h2>
+
+                <ul class="mb-4">
+                    {% for item in outfit.items %}
+                    <li class="text-sm text-gray-700">{{ item.name }} - {{ item.brand }} - {{ item.color }} - {{ item.fit }} - {{ item.type }} - {{ item.material }}</li>
+                    {% endfor %}
+                </ul>
+
+                {% if app.user %}
+                <div class="mt-4 flex justify-between">
+                    <button type="button" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition" onclick="addToWardrobe({{ outfit | json_encode }})">Add to My Outfits</button>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-gray-500">Aucune suggestion de tenue disponible.</p>
+    {% endif %} #}
+
+        {% if suggestions is defined and suggestions.suggestions is not empty %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                {% for outfit in suggestions.suggestions %}
+                <div class="block bg-gray-100 p-4 rounded-lg shadow-md hover:bg-gray-200 transition">
+                    <h2 class="text-xl font-semibold mb-2">{{ outfit.name }}</h2>
+
+                    <ul class="mb-4">
+                        {% for item in outfit.items %}
+                        <li class="text-sm text-gray-700">{{ item.name }} - {{ item.brand }} - {{ item.color }} - {{ item.fit }} - {{ item.type }} - {{ item.material }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    {% if app.user %}
+                    <div class="mt-4 flex justify-between">
+                        <button type="button" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition" onclick="addToWardrobe({{ outfit | json_encode }})">Add to My Outfits</button>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-500">Aucune suggestion de tenue disponible.</p>
+        {% endif %}
+
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function addToWardrobe(outfit) {
+        fetch('{{ path('app_ai_suggestions_add') }}', {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(outfit)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Suggestion added to wardrobe');
+            } else {
+                alert('Failed to add suggestion to wardrobe');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+{% endblock %}
