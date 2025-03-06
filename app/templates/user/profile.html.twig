@@ -10,7 +10,15 @@
         <h2 class="mt-2 text-2xl sm:text-3xl font-bold">{{ user.firstName }} {{ user.lastName }}</h2>
     </div>
 
-    <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+    {% if 'ROLE_ADMIN' in user.roles %}
+    <div class="flex justify-center mt-4">
+        <a href="{{ path('app_admin_index') }}" class="px-6 py-3 text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 rounded">
+            Admin Dashboard
+        </a>
+    </div>
+    {% endif %}
+
+    <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mt-4">
         <button id="outfits-tab" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-black border-b-2 border-transparent hover:border-black">
             Outfits
         </button>
@@ -48,6 +56,8 @@
         {% endif %}
     </div>
 </div>
+
+{% include 'parts/navbar.html.twig' %}
 
 <script>
     document.getElementById('outfits-tab').addEventListener('click', function() {

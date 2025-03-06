@@ -96,6 +96,16 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
+        $admin = new User();
+        $admin->setFirstName('Admin');
+        $admin->setLastName('User');
+        $admin->setEmail('admin@example.com');
+        $hashedPassword = $this->passwordHasher->hashPassword($admin, 'adminpassword');
+        $admin->setPassword($hashedPassword);
+        $admin->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($admin);
+
         $manager->flush();
     }
 }
