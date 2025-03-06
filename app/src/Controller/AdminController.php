@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\AdminType;
+use App\Services\Ai\AiService;
 use App\Repository\UserRepository;
 use App\Repository\OutfitRepository;
 use App\Repository\ItemRepository;
@@ -19,12 +20,39 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class AdminController extends AbstractController
 {
     #[Route(name: 'app_admin_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository, OutfitRepository $outfitRepository, ItemRepository $itemRepository): Response
+    public function index(Request $request, UserRepository $userRepository, OutfitRepository $outfitRepository, ItemRepository $itemRepository, AiService $aiService): Response
     {
+        $users = $userRepository->findAll();
+        $outfits = $outfitRepository->findAll();
+        $items = $itemRepository->findAll();
+        $notifications = [];
+
+        foreach ($items as $item) {
+            if ($item->getBrand() === 'N/A' || $item->getBrand() === 'Unknown' || $item->getBrand() === 'unknown' || empty($item->getBrand())) {
+                $notifications[] = $aiService->generateSuggestionAdminDashboard("marque", "item", $item->getId());
+            }
+            if ($item->getColor() === 'N/A' || $item->getColor() === 'Unknown' || $item->getColor() === 'unknown' || empty($item->getColor())) {
+                $notifications[] = $aiService->generateSuggestionAdminDashboard("couleur", "item", $item->getId());
+            }
+            if ($item->getType() === 'N/A' || $item->getType() === 'Unknown' || $item->getType() === 'unknown' || empty($item->getType())) {
+                $notifications[] = $aiService->generateSuggestionAdminDashboard("type", "item", $item->getId());
+            }
+            if ($item->getFit() === 'N/A' || $item->getFit() === 'Unknown' || $item->getFit() === 'unknown' || empty($item->getFit())) {
+                $notifications[] = $aiService->generateSuggestionAdminDashboard("fit", "item", $item->getId());
+            }
+            if ($item->getMaterial() === 'N/A' || $item->getMaterial() === 'Unknown' || $item->getMaterial() === 'unknown' || empty($item->getMaterial())) {
+                $notifications[] = $aiService->generateSuggestionAdminDashboard("material", "item", $item->getId());
+            }
+        }
+
+        $session = $request->getSession();
+        $session->set('admin_notifications', $notifications);
+
         return $this->render('admin/index.html.twig', [
-            'users' => $userRepository->findAll(),
-            'outfits' => $outfitRepository->findAll(),
-            'items' => $itemRepository->findAll(),
+            'users' => $users,
+            'outfits' => $outfits,
+            'items' => $items,
+            'notifications' => $notifications,
         ]);
     }
 
