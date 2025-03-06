@@ -1,0 +1,21 @@
+{% if likes is not empty %}
+    {% for like in likes %}
+        {% if like.outfit %}
+            <div class="relative w-full h-72 sm:h-96 md:h-112">
+                <a href="{{ path('app_outfit_show', {'id': like.outfit.id}) }}">
+                    <img src="{{ like.outfit.imageUrl }}" alt="{{ like.outfit.name }}" class="w-full h-full object-cover border border-black">
+                </a>
+                <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 flex justify-between items-center">
+                    <span id="likes-count-{{ like.outfit.id }}" class="text-gray-600 dark:text-gray-400">
+                        👍 {{ like.outfit.likes|length }} Likes
+                    </span>
+                    <button type="button" class="bg-red-500 dark:bg-red-600 text-white p-2 rounded hover:bg-red-600 dark:hover:bg-red-500" onclick="toggleLike({{ like.outfit.id }}, 'outfit')">
+                        Like ❤️
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <p class="text-center col-span-1 sm:col-span-2 md:col-span-3 text-gray-300">Aucune tenue likée disponible.</p>
+{% endif %}

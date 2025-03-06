@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Item{% endblock %}
+
+{% block body %}
+<section class="mx-auto">
+  <div class="container bg-white rounded-lg shadow-md p-6">
+    <h1 class="text-2xl font-bold mb-4">Add a new item to {{ outfit.name }}</h1>
+    {{ form_start(form) }}
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div>
+          {{ form_label(form.name) }}
+          {{ form_widget(form.name, {'attr': {'class': 'w-full p-2 border rounded'}}) }}
+        </div>
+        <div>
+          {{ form_label(form.color) }}
+          {{ form_widget(form.color, {'attr': {'class': 'w-full p-2 border rounded'}}) }}
+        </div>
+        <div>
+          {{ form_label(form.brand) }}
+          {{ form_widget(form.brand, {'attr': {'class': 'w-full p-2 border rounded'}}) }}
+        </div>
+        <div>
+          {{ form_label(form.type) }}
+          {{ form_widget(form.type, {'attr': {'class': 'w-full p-2 border rounded'}}) }}
+        </div>
+        <div>
+          {{ form_label(form.fit) }}
+          {{ form_widget(form.fit, {'attr': {'class': 'w-full p-2 border rounded'}}) }}
+        </div>
+        <div>
+          {{ form_label(form.material) }}
+          {{ form_widget(form.material, {'attr': {'class': 'w-full p-2 border rounded'}}) }}
+        </div>
+      </div>
+      <div class="mt-4">
+        <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">Add Item</button>
+      </div>
+    {{ form_end(form) }}
+  </div>
+</section>
+{% endblock %}

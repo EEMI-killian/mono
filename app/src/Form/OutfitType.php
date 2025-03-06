@@ -20,7 +20,7 @@ class OutfitType extends AbstractType
             ->add('imageFile', FileType::class, [
                 'label' => 'Ajouter votre image',
                 'mapped' => false,
-                'required' => true,
+                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '5M',
@@ -30,8 +30,13 @@ class OutfitType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'Please upload a valid image file (JPEG or PNG)',
                     ])
-                ],
-            ]);
+                    ],
+                ])
+                ->add('isPublic', null, [
+                    'label' => 'Rendre publique',
+                ])
+                
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

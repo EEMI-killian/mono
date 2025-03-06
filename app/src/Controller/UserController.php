@@ -15,13 +15,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[Route('/user')]
 final class UserController extends AbstractController
 {
-    #[Route('/profile', name: 'app_profile')]
-    public function profile(UserInterface $user): Response
-    {
-        return $this->render('user/profile.html.twig', [
-            'user' => $user,
-        ]);
-    }
+    // #[Route('/profile', name: 'app_profile')]
+    // public function profile(UserInterface $user): Response
+    // {
+    //     return $this->render('user/profile.html.twig', [
+    //         'user' => $user,
+    //     ]);
+    // }
 
     #[Route(name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
