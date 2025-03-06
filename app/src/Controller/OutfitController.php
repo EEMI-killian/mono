@@ -17,15 +17,18 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Services\Ai\AiServiceInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Services\Image\ImageServiceInterface;
 
 #[Route('/outfit')]
 final class OutfitController extends AbstractController
 {
     private AiServiceInterface $aiService;
+    private ImageServiceInterface $imageService;
 
-    public function __construct(AiServiceInterface $aiService)
+    public function __construct(AiServiceInterface $aiService, ImageServiceInterface $imageService)
     {
         $this->aiService = $aiService;
+        $this->imageService = $imageService;
     }
 
     #[Route(name: 'app_outfit_index', methods: ['GET'])]
@@ -48,25 +51,12 @@ final class OutfitController extends AbstractController
             $imageFile = $form->get('imageFile')->getData();
 
             if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $uploadedFilePath = $this->imageService->uploadImage($imageFile);
 
-                try {
-                    $imageFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    throw new \Exception('File upload failed');
-                }
+                $outfit->setImageUrl('/uploads/images/' . $uploadedFilePath);
 
-                $outfit->setImageUrl('/uploads/images/' . $newFilename);
-
-                $imagePath = $this->getParameter('images_directory') . '/' . $newFilename;
-                $imageData = file_get_contents($imagePath);
-                $base64Image = base64_encode($imageData);
-
+                $base64Image = $this->imageService->convertImageToBase64($uploadedFilePath);
+                dump($base64Image);
 
                 $aiResponse = $this->aiService->analyseImage($base64Image);
             }
@@ -80,7 +70,6 @@ final class OutfitController extends AbstractController
             $outfit->setUserId($this->getUser());
 
             $data = json_decode($aiResponse, true);
-            var_dump($data);
 
             foreach ($data['items'] as $itemData) {
                 $item = new Item();
