@@ -21,7 +21,7 @@ class OutfitType extends AbstractType
             ->add('imageFile', FileType::class, [
                 'label' => 'Ajouter votre image',
                 'mapped' => false,
-                'required' => false,
+                'required' => $options['is_edit'] ? false : true,
                 'constraints' => [
                     new NotNull([
                         'message' => 'Please upload an image file',
@@ -47,6 +47,8 @@ class OutfitType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Outfit::class,
+            'is_edit' => false,
+
         ]);
     }
 }

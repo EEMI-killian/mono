@@ -33,12 +33,13 @@ final class OutfitVoter extends Voter
             return false;
         }
 
+        /** @var Outfit $outfit */
+        $outfit = $subject;
+
+        // Vérifiez si l'utilisateur a le rôle ADMIN
         if ($this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
-
-        /** @var Outfit $outfit */
-        $outfit = $subject;
 
         return match($attribute) {
             self::VIEW => $this->canView($outfit, $user),
@@ -55,11 +56,11 @@ final class OutfitVoter extends Voter
 
     private function canEdit(Outfit $outfit, User $user): bool
     {
-        return $outfit->getUserId() === $user;
+        return $outfit->getUserId() === $user || $this->security->isGranted('ROLE_ADMIN');
     }
 
     private function canDelete(Outfit $outfit, User $user): bool
     {
-        return $outfit->getUserId() === $user;
+        return $outfit->getUserId() === $user || $this->security->isGranted('ROLE_ADMIN');
     }
 }

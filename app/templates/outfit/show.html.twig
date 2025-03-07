@@ -55,7 +55,14 @@
       </div>
     </div>
     <div class="mt-6 flex justify-between">
-        {% if app.request.query.get('from') == 'social' %}
+    {% if app.request.query.get('from') == 'social' %}
+    {% if app.user and app.user.id != outfit.userId.id %}
+        <div class="mt-4 flex justify-between">
+            <form method="post" action="{{ path('app_outfit_add_to_user', {'id': outfit.id}) }}">
+                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">Add to My Outfits</button>
+            </form>
+        </div>
+    {% endif %}
             <a href="{{ path('app_social') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Back to feed</a>
         {% elseif app.request.query.get('from') == 'profile' %}
             <a href="{{ path('app_profile') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Back to profile</a>
