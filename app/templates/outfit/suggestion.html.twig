@@ -14,29 +14,6 @@
         <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Générer des suggestions</button>
     </form>
 
-    {# {% if suggestions is defined and suggestions is not empty %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-            {% for outfit in suggestions %}
-            <div class="block bg-gray-100 p-4 rounded-lg shadow-md hover:bg-gray-200 transition">
-                <h2 class="text-xl font-semibold mb-2">{{ outfit.name }}</h2>
-
-                <ul class="mb-4">
-                    {% for item in outfit.items %}
-                    <li class="text-sm text-gray-700">{{ item.name }} - {{ item.brand }} - {{ item.color }} - {{ item.fit }} - {{ item.type }} - {{ item.material }}</li>
-                    {% endfor %}
-                </ul>
-
-                {% if app.user %}
-                <div class="mt-4 flex justify-between">
-                    <button type="button" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition" onclick="addToWardrobe({{ outfit | json_encode }})">Add to My Outfits</button>
-                </div>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p class="text-center text-gray-500">Aucune suggestion de tenue disponible.</p>
-    {% endif %} #}
 
       {% if suggestions is defined and suggestions.suggestions is not empty %}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">

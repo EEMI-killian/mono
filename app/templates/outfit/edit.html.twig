@@ -3,15 +3,32 @@
 {% block title %}Éditer une tenue{% endblock %}
 
 {% block body %}
-<div class="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold mb-4">Éditer une tenue</h1>
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enregistrer</button>
-    {{ form_end(form) }}
+<div class="bg-white dark:bg-gray-dark dark:text-white">
+    <h1 class="text-2xl font-bold p-2 text-center">Éditer une tenue</h1>
+    <div class="flex flex-row p-6 gap-6">
+        <img src="{{ outfit.imageUrl }}" alt="" class="w-s">
+        <div class="flex flex-col p-6 gap-6">
+        <div class="flex flex-col">
+            <label for="{{ form.name.vars.label }}" class="font-bold text-lg" >{{ form.name.vars.label }}</label>
+            <input type="text" name="{{ form.name.vars.name }}"  value="{{outfit.name}}" class="bg-gray p-2 rounded border border-gray-medium">
+        </div>
+        <div class="flex flex-col">
+            <label for="{{ form.imageFile.vars.label }}" class="font-bold text-lg">{{ form.imageFile.vars.label }}</label>
+            <input type="file"  value="{{outfit.imageUrl}}">
+        </div>
+        <div class="flex flex-col">
+            <label for="{{ form.isPublic.vars.label }}" class="font-bold text-lg">{{ form.isPublic.vars.label }}</label>
+            <input type="checkbox" checked="{{outfit.isPublic}}">
+        </div>
+         <div class="flex flex-row gap-2">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enregistrer</button>
+            <button type="submit" class="bg-danger text-white font-bold py-2 px-4 rounded">{{ include('outfit/_delete_form.html.twig')}}<button>
+        <div>
+        
+        </div>
+    </div>
+
+
+
 </div>
-
-<a href="{{ path('app_profile') }}">Retour vers le profil</a>
-
-    {{ include('outfit/_delete_form.html.twig') }}
 {% endblock %}
