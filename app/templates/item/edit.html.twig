@@ -3,47 +3,48 @@
 {% block title %}Éditer un item{% endblock %}
 
 {% block body %}
-<div class="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+<div class="p-6 bg-white dark:bg-gray-dark dark:text-white">
     <h1 class="text-2xl font-bold mb-4">Éditer un item</h1>
 
         <div class="flex flex-col p-6 gap-6">
-        
+        <form method="POST" enctype="multipart/form-data" action="{{ path('app_outfit_edit', {'id': item.id}) }}">
         <div class="flex flex-col">
             <label for="{{ form.name.vars.label }}" class="font-bold text-lg" >{{ form.name.vars.label }}</label>
-            <input type="text" name="{{ form.name.vars.name }}"  value="{{item.name}}" class="bg-gray p-2 rounded border border-gray-medium">
+            <input type="text" name="{{ form.name.vars.name }}"  value="{{item.name}}" class="bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000">
         </div>
         <div class="flex flex-col">
             <label for="{{ form.brand.vars.label }}" class="font-bold text-lg" >{{ form.brand.vars.label }}</label>
-            <input type="text" name="{{ form.brand.vars.name }}"  value="{{item.brand}}" class="bg-gray p-2 rounded border border-gray-medium">
+            <input type="text" name="{{ form.brand.vars.name }}"  value="{{item.brand}}" class="bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000">
         </div>
         <div class="flex flex-col">
             <label for="{{ form.color.vars.label }}" class="font-bold text-lg" >{{ form.color.vars.label }}</label>
-            <input type="text" name="{{ form.color.vars.name }}"  value="{{item.color}}" class="bg-gray p-2 rounded border border-gray-medium">
+            <input type="text" name="{{ form.color.vars.name }}"  value="{{item.color}}" class="bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000">
         </div>
         <div class="flex flex-col">
             <label for="{{ form.type.vars.label }}" class="font-bold text-lg" >{{ form.type.vars.label }}</label>
-            <input type="text" name="{{ form.type.vars.name }}"  value="{{item.type}}" class="bg-gray p-2 rounded border border-gray-medium">
+            <input type="text" name="{{ form.type.vars.name }}"  value="{{item.type}}" class="bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000">
         </div>
         <div class="flex flex-col">
             <label for="{{ form.type.vars.label }}" class="font-bold text-lg" >{{ form.type.vars.label }}</label>
-            <input type="text" name="{{ form.type.vars.name }}"  value="{{item.type}}" class="bg-gray p-2 rounded border border-gray-medium">
+            <input type="text" name="{{ form.type.vars.name }}"  value="{{item.type}}" class="bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000">
         </div>
         <div class="flex flex-col">
             <label for="{{ form.fit.vars.label }}" class="font-bold text-lg" >{{ form.fit.vars.label }}</label>
-            <input type="text" name="{{ form.fit.vars.name }}"  value="{{item.fit}}" class="bg-gray p-2 rounded border border-gray-medium">
+            <input type="text" name="{{ form.fit.vars.name }}"  value="{{item.fit}}" class="bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000">
         </div>
         <div class="flex flex-col">
             <label for="{{ form.material.vars.label }}" class="font-bold text-lg" >{{ form.material.vars.label }}</label>
-            <input type="text" name="{{ form.material.vars.name }}"  value="{{item.material}}" class="bg-gray p-2 rounded border border-gray-medium">
+            <input type="text" name="{{ form.material.vars.name }}"  value="{{item.material}}" class="bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000">
         </div>
         <div class="flex flex-col">
             <label for="{{ form.partnerUrl.vars.label }}" class="font-bold text-lg" >{{ form.partnerUrl.vars.label }}</label>
-            <input type="text" name="{{ form.partnerUrl.vars.name }}"  value="{{item.partnerUrl}}" class="bg-gray p-2 rounded border border-gray-medium">
+            <input type="text" name="{{ form.partnerUrl.vars.name }}"  value="{{item.partnerUrl}}" class="bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000">
         </div>
          <div class="flex flex-row gap-2">
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enregistrer</button>
             <button type="submit">{{ include('item/_delete_form.html.twig')}}<button>
-        <div>    
+        <div>  
+        </form>  
     </div>
 </div>
 
