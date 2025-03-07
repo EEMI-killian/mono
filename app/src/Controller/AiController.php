@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controller;
 
@@ -31,13 +31,13 @@ class AiController extends AbstractController
         $userOutfits = $outfitRepository->findBy(['userId' => $user]);
         $userWardrobe = $itemRepository->findBy(['userId' => $user]);
 
-        $outfitData = array_map(function($outfit) {
+        $outfitData = array_map(function ($outfit) {
             return [
                 'id' => $outfit->getId(),
                 'name' => $outfit->getName(),
                 'imageUrl' => $outfit->getImageUrl(),
                 'likes' => $outfit->getLikes()->count(),
-                'items' => array_map(function($item) {
+                'items' => array_map(function ($item) {
                     return [
                         'name' => $item->getName(),
                         'brand' => $item->getBrand(),
@@ -50,7 +50,7 @@ class AiController extends AbstractController
             ];
         }, $userOutfits);
 
-        $wardrobeData = array_map(function($item) {
+        $wardrobeData = array_map(function ($item) {
             return [
                 'name' => $item->getName(),
                 'brand' => $item->getBrand(),
@@ -65,17 +65,19 @@ class AiController extends AbstractController
 
         $suggestions = $this->aiService->generateOutfitSuggestionsWithUserInput($outfitData, $wardrobeData, $userInput);
 
-        // Debugging: Log the raw JSON response
+
         $logDir = __DIR__ . '/../../logs';
         if (!is_dir($logDir)) {
             mkdir($logDir, 0777, true);
         }
         file_put_contents($logDir . '/suggestions.log', $suggestions);
 
-        // Convert the suggestions to an array of outfits
-        $suggestionsArray = json_decode($suggestions, true);
 
-        // Debugging: Check the structure of $suggestionsArray
+        $suggestionsArray = json_decode($suggestions, true);
+        dump($suggestionsArray);
+
+
+
         if ($suggestionsArray === null) {
             throw new \Exception('Failed to decode JSON: ' . json_last_error_msg() . "\n" . $suggestions);
         }

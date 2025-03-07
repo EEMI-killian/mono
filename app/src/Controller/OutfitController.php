@@ -31,13 +31,6 @@ final class OutfitController extends AbstractController
         $this->imageService = $imageService;
     }
 
-    #[Route(name: 'app_outfit_index', methods: ['GET'])]
-    public function index(OutfitRepository $outfitRepository): Response
-    {
-        return $this->render('outfit/index.html.twig', [
-            'outfits' => $outfitRepository->findAll(),
-        ]);
-    }
 
     #[Route('/new', name: 'app_outfit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
@@ -203,8 +196,8 @@ final class OutfitController extends AbstractController
             $newItem->setColor($item->getColor());
             $newItem->setBrand($item->getBrand());
             $newItem->setFit($item->getFit());
-            $newItem->setType($item->getType()); // Assurez-vous que le champ type est copié
-            $newItem->setMaterial($item->getMaterial()); // Assurez-vous que le champ material est copié
+            $newItem->setType($item->getType());
+            $newItem->setMaterial($item->getMaterial());
             $newItem->setUserId($user);
             $newOutfit->addItem($newItem);
             $entityManager->persist($newItem);

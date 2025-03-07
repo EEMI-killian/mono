@@ -141,28 +141,18 @@ A global outfit analysis, identifying the overall style (e.g., 'casual', 'sporty
                                             'type' => 'object',
                                             'properties' => [
                                                 'name' => ['type' => 'string'],
-                                                'items' => [
-                                                    'type' => 'array',
-                                                    'items' => [
-                                                        'type' => 'object',
-                                                        'properties' => [
-                                                            'name' => ['type' => 'string'],
-                                                            'brand' => ['type' => 'string'],
-                                                            'color' => ['type' => 'string'],
-                                                            'fit' => ['type' => 'string'],
-                                                            'type' => ['type' => 'string'],
-                                                            'material' => ['type' => 'string']
-                                                        ],
-                                                        'required' => ['name', 'brand', 'color', 'fit', 'type', 'material'],
-                                                        'additionalProperties' => false
-                                                    ]
-                                                ]
+                                                'brand' => ['type' => 'string'],
+                                                'color' => ['type' => 'string'],
+                                                'fit' => ['type' => 'string'],
+                                                'type' => ['type' => 'string'],
+                                                'material' => ['type' => 'string'],
                                             ],
-                                            'required' => ['name', 'items'],
+                                            'required' => ['name', 'brand', 'color', 'fit', 'type', 'material'],
                                             'additionalProperties' => false
                                         ]
                                     ]
                                 ],
+
                                 'required' => ['suggestions'],
                                 'additionalProperties' => false
                             ],
@@ -197,20 +187,20 @@ A global outfit analysis, identifying the overall style (e.g., 'casual', 'sporty
             'POST',
             'https://api.openai.com/v1/chat/completions',
             [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => "Bearer {$this->openaiApiKey}",
-            ],
-            'json' => [
-                'model' => 'gpt-4o-2024-08-06',
-                'messages' => [
-                [
-                    'role' => 'user',
-                    'content' => $prompt
-                ]
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => "Bearer {$this->openaiApiKey}",
                 ],
-                'max_tokens' => 75
-            ]
+                'json' => [
+                    'model' => 'gpt-4o-2024-08-06',
+                    'messages' => [
+                        [
+                            'role' => 'user',
+                            'content' => $prompt
+                        ]
+                    ],
+                    'max_tokens' => 75
+                ]
             ]
         );
 
@@ -221,5 +211,4 @@ A global outfit analysis, identifying the overall style (e.g., 'casual', 'sporty
         $content = $response->toArray();
         return $content['choices'][0]['message']['content'];
     }
-
 }
