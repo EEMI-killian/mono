@@ -78,22 +78,23 @@
                                 </div>
                             </div>
 
-                            <div>
-                                {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'w-full p-2 border border-gray-300 rounded'}}) }}
+                            <div class="flex items-center space-x-2">
+                                {{ form_widget(registrationForm.agreeTerms, {
+                                    'attr': {
+                                        'class': 'h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded'
+                                    }
+                                }) }}
+                                {{ form_label(registrationForm.agreeTerms, 'J\'accepte les termes et conditions', {'label_attr': {'class': 'text-gray-700'}}) }}
                             </div>
 
                             <button type="submit" class="mt-5 tracking-wide font-semibold bg-purple-500 text-gray-100 w-full py-4 rounded-lg hover:bg-purple-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
-                                <svg class="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                                    <circle cx="8.5" cy="7" r="4" />
-                                    <path d="M20 8v6M23 11h-6" />
-                                </svg>
+
                                 <span class="ml-3">S'inscrire</span>
                             </button>
                         {{ form_end(registrationForm) }}
 
                         <div class="mt-6 text-center">
-                            <a href="{{ path('app_login') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                            <a href="{{ path('app_login') }}" class="text-purple hover:underline">
                                 Déjà inscrit ? Connectez-vous
                             </a>
                         </div>

@@ -42,3 +42,51 @@
         </div>
     </div>
 {% endmacro %}
+
+{% macro item_card(item) %}
+<div class="bg-white/10 p-6 text-center item-card dark:text-white dark:bg-purple rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <h2 class="text-xl sm:text-2xl font-semibold dark:text-white text-gray-800">{{ item.name }}</h2>
+    <p class="text-lg dark:text-white text-gray-600">Marque: {{ item.brand }}</p>
+    <p class="text-lg dark:text-white text-gray-600">Couleur: {{ item.color }}</p>
+    <div class="mt-4">
+        {% if item.partnerUrl is not empty %}
+            <a href="{{ item.partnerUrl }}" class="px-4 py-2 bg-green-500 dark:text-white text-white rounded-full hover:bg-green-600 transition-colors duration-300" target="_blank">Acheter</a>
+        {% else %}
+            <p class="text-gray-500 dark:text-white">Pas de lien disponible</p>
+        {% endif %}
+    </div>
+    <div class="mt-4 flex justify-between items-center">
+        {% if is_granted('EDIT', item) %}
+            <a href="{{ path('app_item_edit', {'id': item.id, 'itemId': item.id}) }}" class="text-blue-500 hover:text-blue-700 transition-colors duration-300">Éditer</a>
+        {% endif %}
+        {% if is_granted('DELETE', item) %}
+            <form method="post" action="{{ path('app_item_delete', {'id': item.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet item ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+                <button class="text-red-500 hover:text-red-700 transition-colors duration-300">Supprimer</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro my_outfit_card(outfit) %}
+<div class="relative w-full h-72 sm:h-96 md:h-112  rounded-lg overflow-hidden shadow-lg">
+<a href="{{ path('app_outfit_show', {'id': outfit.id, 'from': 'profile'}) }}">
+    <img src="{{ outfit.imageUrl }}" alt="{{ outfit.name }}" class="w-full h-full object-cover">
+</a>
+<div class="absolute bottom-0 left-0 right-0 bg-purple bg-opacity-60 text-white p-4 flex justify-between items-center">
+    {% if is_granted('EDIT', outfit) %}
+        <a href="{{ path('app_outfit_edit', {'id': outfit.id}) }}" class="text-blue-400 hover:text-blue-600">Éditer</a>
+    {% endif %}
+    {% if is_granted('DELETE', outfit) %}
+        <form method="post" action="{{ path('app_outfit_delete', {'id': outfit.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tenue ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ outfit.id) }}">
+            <button class="text-red-400 hover:text-red-600">Supprimer</button>
+        </form>
+    {% endif %}
+</div>
+</div>
+{% endmacro %}
+
+
+
