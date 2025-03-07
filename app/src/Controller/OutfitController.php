@@ -125,8 +125,29 @@ final class OutfitController extends AbstractController
                     throw new \Exception('AI response is null');
                 }
 
+
+
                 $outfit->setPromptResult($aiResponse);
             }
+
+            $data = json_decode($aiResponse, true);
+            dump($data);
+
+            foreach ($data['items'] as $itemData) {
+                $item = new Item();
+                $item->setName($itemData['name'] ?? null);
+                $item->setBrand($itemData['brand'] ?? null);
+                $item->setColor($itemData['color'] ?? null);
+                $item->setFit($itemData['fit'] ?? null);
+                $item->setType($itemData['type'] ?? null);
+                $item->setMaterial($itemData['material'] ?? null);
+                $item->setUserId($this->getUser());
+
+
+                $entityManager->persist($item);
+                $outfit->addItem($item);
+            }
+
 
             $entityManager->flush();
 

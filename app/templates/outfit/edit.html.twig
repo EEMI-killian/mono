@@ -6,27 +6,40 @@
 <section class="p-6 bg-white dark:bg-gray-dark dark:text-white">
     <h1 class="text-2xl font-bold p-2 text-center">Éditer une tenue</h1>
     <div class="flex flex-row p-6 gap-6">
-        <img src="{{ outfit.imageUrl }}" alt="" class="w-s">
+        <img src="{{ outfit.imageUrl }}" alt="Image de la tenue" class="w-s">
         <div class="flex flex-col p-6 gap-6">
             <form method="POST" enctype="multipart/form-data" action="{{ path('app_outfit_edit', {'id': outfit.id}) }}">
-            <div class="flex flex-col">
-                <label for="{{ form.name.vars.label }}" class="font-bold text-lg" >{{ form.name.vars.label }}</label>
-                <input type="text" name="{{ form.name.vars.name }}"  value="{{outfit.name}}" class="bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000">
-            </div>
-            <div class="flex flex-col">
-                <label for="{{ form.imageFile.vars.label }}" class="font-bold text-lg">{{ form.imageFile.vars.label }}</label>
-                <input type="file"  value="{{outfit.imageUrl}}">
-            </div>
-            <div class="flex flex-col">
-                <label for="{{ form.isPublic.vars.label }}" class="font-bold text-lg">{{ form.isPublic.vars.label }}</label>
-                <input type="checkbox" checked="{{outfit.isPublic}}">
-            </div>
-            <div class="flex flex-row gap-2">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enregistrer</button>
-                <button>{{ include('outfit/_delete_form.html.twig')}}<button>
-            <div>
+                {{ form_row(form._token) }} 
+
+                <div class="flex flex-col">
+                    {{ form_label(form.name, null, {'label_attr': {'class': 'font-bold text-lg'}}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'bg-gray p-2 rounded border border-gray-medium dark:bg-gray dark:text-black-1000'}}) }}
+                    {{ form_errors(form.name) }}
+                </div>
+
+                <div class="flex flex-col">
+                    {{ form_label(form.imageFile, null, {'label_attr': {'class': 'font-bold text-lg'}}) }}
+                    {{ form_widget(form.imageFile, {'attr': {'class': 'p-2'}}) }}
+                    {{ form_errors(form.imageFile) }}
+                </div>
+
+                <div class="flex flex-col">
+                    {{ form_label(form.isPublic, null, {'label_attr': {'class': 'font-bold text-lg'}}) }}
+                    {{ form_widget(form.isPublic, {'attr': {'class': 'form-checkbox'}}) }}
+                    {{ form_errors(form.isPublic) }}
+                </div>
+
+                <div class="flex flex-row gap-2">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Enregistrer
+                    </button>
+                    {{ include('outfit/_delete_form.html.twig') }}
+                </div>
+
+                {{ form_rest(form) }}
             </form>
         </div>
     </div>
 </section>
+
 {% endblock %}
