@@ -131,8 +131,6 @@ final class OutfitController extends AbstractController
             }
 
             $data = json_decode($aiResponse, true);
-            dump($data);
-
             foreach ($data['items'] as $itemData) {
                 $item = new Item();
                 $item->setName($itemData['name'] ?? null);
