@@ -22,29 +22,29 @@ class AppFixtures extends Fixture
     {
         $items = [
             ['name' => 'Casquette', 'brand' => 'New Era', 'color' => 'blanc', 'type' => 'cap', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'Pull', 'brand' => 'Ami Paris', 'color' => 'bleu ciel', 'type' => 'top', 'fit' => 'oversize', 'material' => 'wool', 'isPublic' => true],
-            ['name' => 'Pantalon', 'brand' => 'Ami Paris', 'color' => 'black', 'type' => 'bottom', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'bleu ciel', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
+            ['name' => 'Pull', 'brand' => 'Ami Paris', 'color' => 'bleu ciel', 'type' => 'top', 'fit' => 'oversize', 'material' => 'wool', 'isPublic' => true, 'partnerUrl' => 'https://northexclusive.fr/products/ami-paris-col-roule-alpaga-bleu'],
+            ['name' => 'Pantalon', 'brand' => 'Ami Paris', 'color' => 'black', 'type' => 'bottom', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'bleu ciel', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true, 'partnerUrl' => 'https://www.goat.com/fr-fr/sneakers/off-white-x-wmns-waffle-racer-cd8180-400'],
 
-            ['name' => 'Veste', 'brand' => 'Bape', 'color' => 'bleu', 'type' => 'jacket', 'fit' => 'regular', 'material' => 'denim', 'isPublic' => true],
-            ['name' => 'T-shirt', 'brand' => 'Bape', 'color' => 'blanc', 'type' => 'top', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'Short', 'brand' => 'Bape', 'color' => 'camouflage', 'type' => 'bottom', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'Chaussures', 'brand' => 'Bape', 'color' => 'blanc', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true],
+            ['name' => 'Veste', 'brand' => 'Bape', 'color' => 'bleu', 'type' => 'jacket', 'fit' => 'regular', 'material' => 'denim', 'isPublic' => true,],
+            ['name' => 'T-shirt', 'brand' => 'Bape', 'color' => 'blanc', 'type' => 'top', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Short', 'brand' => 'Bape', 'color' => 'camouflage', 'type' => 'bottom', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Chaussures', 'brand' => 'Bape', 'color' => 'blanc', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true, 'partnerUrl' => 'https://www.goat.com/fr-fr/sneakers/bapesta-abc-camo-green-2022-1i70191005-grn'],
 
-            ['name' => 'Sweatshirt', 'brand' => 'Denim Tears', 'color' => 'rose', 'type' => 'top', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'Survetement', 'brand' => 'Denim Tears', 'color' => 'rose', 'type' => 'bottom', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'blanc', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true],
-            ['name' => 'Chaine', 'brand' => 'Live Yours', 'color' => 'gold', 'type' => 'accessories', 'fit' => 'regular', 'material' => 'metal', 'isPublic' => true],
+            ['name' => 'Sweatshirt', 'brand' => 'Denim Tears', 'color' => 'rose', 'type' => 'top', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true, 'partnerUrl' => 'https://dimension-stores.com/products/301-100-30-pink'],
+            ['name' => 'Survetement', 'brand' => 'Denim Tears', 'color' => 'rose', 'type' => 'bottom', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true, 'partnerUrl' => 'https://dimension-stores.com/products/401-100-30-pink'],
+            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'blanc', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true,],
+            ['name' => 'Chaine', 'brand' => 'Live Yours', 'color' => 'gold', 'type' => 'accessories', 'fit' => 'regular', 'material' => 'metal', 'isPublic' => true,],
 
-            ['name' => 'Varsity Jacket', 'brand' => 'Louis Vuitton', 'color' => 'blanc', 'type' => 'jacket', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'Pantalon', 'brand' => 'Louis Vuitton', 'color' => 'bleu', 'type' => 'bottom', 'fit' => 'large', 'material' => 'denim', 'isPublic' => true],
-            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'white', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true],
-            ['name' => 'Ceinture', 'brand' => 'Louis Vuitton', 'color' => 'argent', 'type' => 'accessories', 'fit' => 'regular', 'material' => 'metal', 'isPublic' => true],
+            ['name' => 'Varsity Jacket', 'brand' => 'Louis Vuitton', 'color' => 'blanc', 'type' => 'jacket', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Pantalon', 'brand' => 'Louis Vuitton', 'color' => 'bleu', 'type' => 'bottom', 'fit' => 'large', 'material' => 'denim', 'isPublic' => true,],
+            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'white', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true,],
+            ['name' => 'Ceinture', 'brand' => 'Louis Vuitton', 'color' => 'argent', 'type' => 'accessories', 'fit' => 'regular', 'material' => 'metal', 'isPublic' => true,],
 
-            ['name' => 'Veste', 'brand' => 'Tommy Hilfiger', 'color' => 'bleu', 'type' => 'jacket', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'T-shirt', 'brand' => 'Tommy Hilfiger', 'color' => 'blanc', 'type' => 'top', 'fit' => 'slim', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'Pantalon', 'brand' => 'Tommy Hilfiger', 'color' => 'bleu', 'type' => 'bottom', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'blanc', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true],
+            ['name' => 'Veste', 'brand' => 'Tommy Hilfiger', 'color' => 'bleu', 'type' => 'jacket', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'T-shirt', 'brand' => 'Tommy Hilfiger', 'color' => 'blanc', 'type' => 'top', 'fit' => 'slim', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Pantalon', 'brand' => 'Tommy Hilfiger', 'color' => 'bleu', 'type' => 'bottom', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'blanc', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true,],
         ];
 
         $createdItems = [];
@@ -57,6 +57,9 @@ class AppFixtures extends Fixture
             $item->setFit($itemData['fit']);
             $item->setMaterial($itemData['material']);
             $item->setIsPublic($itemData['isPublic']);
+            if (isset($itemData['partnerUrl'])) {
+                $item->setPartnerUrl($itemData['partnerUrl']);
+            }
             $manager->persist($item);
             $createdItems[] = $item;
         }
