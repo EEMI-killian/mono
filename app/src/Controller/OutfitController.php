@@ -6,7 +6,6 @@ use App\Entity\Outfit;
 use App\Entity\Item;
 use App\Form\OutfitType;
 use App\Form\ItemType;
-
 use App\Repository\OutfitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -89,7 +88,7 @@ final class OutfitController extends AbstractController
             $entityManager->persist($outfit);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_outfit_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_profile', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('outfit/new.html.twig', [
@@ -112,35 +111,20 @@ final class OutfitController extends AbstractController
     #[IsGranted('EDIT', subject: 'outfit')]
     public function edit(Request $request, Outfit $outfit, EntityManagerInterface $entityManager, UserInterface $user, SluggerInterface $slugger): Response
     {
-        if ($outfit->getUserId() !== $user) {
-            throw $this->createAccessDeniedException('You do not have permission to edit this outfit.');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $outfit);
 
-        $form = $this->createForm(OutfitType::class, $outfit);
+        $form = $this->createForm(OutfitType::class, $outfit, ['is_edit' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('imageFile')->getData();
 
             if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $uploadedFilePath = $this->imageService->uploadImage($imageFile);
 
-                try {
-                    $imageFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    throw new \Exception('File upload failed');
-                }
+                $outfit->setImageUrl('/uploads/images/' . $uploadedFilePath);
 
-                $outfit->setImageUrl('/uploads/images/' . $newFilename);
-
-                $imagePath = $this->getParameter('images_directory') . '/' . $newFilename;
-                $imageData = file_get_contents($imagePath);
-                $base64Image = base64_encode($imageData);
+                $base64Image = $this->imageService->convertImageToBase64($uploadedFilePath);
 
                 $aiResponse = $this->aiService->analyseImage($base64Image);
 
@@ -153,7 +137,7 @@ final class OutfitController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_outfit_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_profile', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('outfit/edit.html.twig', [
@@ -161,30 +145,6 @@ final class OutfitController extends AbstractController
             'form' => $form,
         ]);
     }
-
-    // #[Route('/{id}/item/{itemId}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
-    // #[IsGranted('EDIT', subject: 'item')]
-    // public function editItem(Request $request, Outfit $outfit, Item $item, EntityManagerInterface $entityManager, UserInterface $user): Response
-    // {
-    //     if ($outfit->getUserId() !== $user || $item->getUserId() !== $user) {
-    //         throw $this->createAccessDeniedException('You do not have permission to edit this item.');
-    //     }
-
-    //     $form = $this->createForm(ItemType::class, $item);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('app_outfit_show', ['id' => $outfit->getId()], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->render('item/edit.html.twig', [
-    //         'item' => $item,
-    //         'form' => $form,
-    //         'outfit' => $outfit,
-    //     ]);
-    // }
 
     #[Route('/{id}', name: 'app_outfit_delete', methods: ['POST'])]
     #[IsGranted('DELETE', subject: 'outfit')]
@@ -253,6 +213,6 @@ final class OutfitController extends AbstractController
         $entityManager->persist($newOutfit);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_outfit_show', ['id' => $newOutfit->getId()]);
+        return $this->redirectToRoute('app_social', [], Response::HTTP_SEE_OTHER);
     }
 }

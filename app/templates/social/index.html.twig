@@ -28,8 +28,7 @@
                     Like ❤️
                 </button>
             </div>
-
-            {% if app.user %}
+            {% if app.user and outfit.userId and app.user.id != outfit.userId.id %}
             <div class="mt-4 flex justify-between">
                 <form method="post" action="{{ path('app_outfit_add_to_user', {'id': outfit.id}) }}">
                     <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">Add to My Outfits</button>

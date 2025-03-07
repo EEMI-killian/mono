@@ -87,6 +87,7 @@ final class AdminController extends AbstractController
     #[Route('/{id}/edit', name: 'app_admin_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+
         $form = $this->createForm(AdminType::class, $user);
         $form->handleRequest($request);
 
