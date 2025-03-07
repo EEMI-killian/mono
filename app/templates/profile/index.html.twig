@@ -3,7 +3,7 @@
 {% block title %}{{ user.firstName }} {{ user.lastName }} - Profil{% endblock %}
 
 {% block body %}
-<div class="min-h-screen flex flex-col bg-white">
+<div class="min-h-screen dark:text-white dark:bg-gray-dark flex flex-col bg-white">
 
     <div class="p-6 flex flex-col items-center bg-gradient-to-b from-purple-600 to-purple-900 text-white">
         <h1 class="mt-2 text-3xl sm:text-4xl font-bold">Profil de</h1>
@@ -18,98 +18,60 @@
     </div>
     {% endif %}
 
-    <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-        <button id="outfits-tab" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-black border-b-2 border-transparent hover:border-black">
+    <div class="flex flex-col justify-center  mt-4">
+        <button id="outfits-tab" class="w-full flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-white bg-purple-500 hover:bg-purple-600  shadow-md transition">
             Outfits
         </button>
-        <button id="items-tab" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-black border-b-2 border-transparent hover:border-black">
+        <button id="items-tab" class="w-full flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-white bg-purple-500 hover:bg-purple-600  shadow-md transition">
             Items
         </button>
-        <button id="liked-outfits-tab" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-black border-b-2 border-transparent hover:border-black">
+        <button id="liked-outfits-tab" class="w-full flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-white bg-purple-500 hover:bg-purple-600  shadow-md transition">
             Tenues Likées
         </button>
     </div>
-    <a href="{{ path('app_outfit_new') }}" class="px-6 py-3 text-lg font-semibold bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">Ajouter une tenue</a>
-    <a href="{{ path('app_ai_suggestions')}}" >Suggestions AI</a>
+    <div class="flex justify-center mt-4">
+        <a href="{{ path('app_ai_suggestions')}}" class="px-6 py-3 text-lg font-semibold bg-purple text-white rounded-lg shadow-md hover:bg-purple-600 transition">Suggestions AI</a>
+    </div>
 
-    <div id="outfits-content" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <div id="outfits-content" class="grid grid-cols-1 p-4 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
         {% if user.outfit is not empty %}
             {% for outfit in user.outfit %}
-                <div class="relative w-full h-72 sm:h-96 md:h-112">
-                    <a href="{{ path('app_outfit_show', {'id': outfit.id, 'from': 'profile'}) }}">
-                        <img src="{{ outfit.imageUrl }}" alt="{{ outfit.name }}" class="w-full h-full object-cover border border-black">
-                    </a>
-                    <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 flex justify-between items-center">
-                    {% if is_granted('EDIT', outfit) %}
-                        <a href="{{ path('app_outfit_edit', {'id': outfit.id}) }}" class="text-blue-500 hover:text-blue-700">Éditer</a>
-                    {% endif %}
-                    {% if is_granted('DELETE', outfit) %}
-                        <form method="post" action="{{ path('app_outfit_delete', {'id': outfit.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tenue ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ outfit.id) }}">
-                            <button class="text-red-500 hover:text-red-700">Supprimer</button>
-                        </form>
-                    {% endif %}
-                    </div>
-                    
-                </div>
+            {% import 'macros/macro.html.twig' as macros %}
+
+                {{ macros.my_outfit_card(outfit) }}
+
             {% endfor %}
         {% else %}
-            <p class="text-center col-span-1 sm:col-span-2 md:col-span-3 text-gray-300">Aucun outfit disponible.</p>
+            <p class="text-center col-span-1 sm:col-span-2 md:col-span-3 text-gray-500">Aucun outfit disponible.</p>
         {% endif %}
     </div>
 
-    <div id="items-content" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <div id="items-content" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
         <div class="flex justify-center col-span-1 sm:col-span-2 md:col-span-3 mt-4">
             <input type="text" id="search-input" class="px-4 py-2 border border-gray-300 rounded" placeholder="Rechercher...">
         </div>
         {% if user.item is not empty %}
             {% for item in user.item %}
-                <div class="bg-white/10 p-6 text-center item-card">
-                    <h2 class="text-xl sm:text-2xl font-semibold">{{ item.name }}</h2>
-                    <p class="text-lg">Marque: {{ item.brand }}</p>
-                    <p class="text-lg">Couleur: {{ item.color }}</p>
-                    <div class="mt-2">
-                {% if item.partnerUrl is not empty %}
-                    <a href="{{ item.partnerUrl }}" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition" target="_blank">Acheter</a>
-                {% else %}
-                    <p class="text-gray-500">Pas de lien disponible</p>
-                {% endif %}
-            </div>
-                    <div class="mt-2 flex justify-between items-center">
-                    {% if is_granted('EDIT', item) %}
-                        <a href="{{ path('app_item_edit', {'id': item.id, 'itemId': item.id}) }}" class="text-blue-500 hover:text-blue-700">Éditer</a>
-                    {% endif %}
-                        {% if is_granted('DELETE', item) %}
-                        <form method="post" action="{{ path('app_item_delete', {'id': item.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet item ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
-                            <button class="text-red-500 hover:text-red-700">Supprimer</button>
-                        </form>
-                    {% endif %}
-                    </div>
-                </div>
+
+            {% import 'macros/macro.html.twig' as macros %}
+
+            {{ macros.item_card(item) }}
+
+
             {% endfor %}
         {% else %}
             <p class="text-center col-span-1 sm:col-span-2 md:col-span-3 text-gray-300">Aucun item disponible.</p>
         {% endif %}
     </div>
 
-    <div id="liked-outfits-content" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <div id="liked-outfits-content" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
         {% if user.likes is not empty %}
             {% for like in user.likes %}
                 {% if like.outfit %}
-                    <div class="relative w-full h-72 sm:h-96 md:h-112">
-                        <a href="{{ path('app_outfit_show', {'id': like.outfit.id}) }}">
-                            <img src="{{ like.outfit.imageUrl }}" alt="{{ like.outfit.name }}" class="w-full h-full object-cover border border-black">
-                        </a>
-                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 flex justify-between items-center">
-                            <span id="likes-count-{{ like.outfit.id }}" class="text-gray-600 dark:text-gray-400">
-                                👍 {{ like.outfit.likes|length }} Likes
-                            </span>
-                            <button type="button" class="bg-red-500 dark:bg-red-600 text-white p-2 rounded hover:bg-red-600 dark:hover:bg-red-500" onclick="toggleLike({{ like.outfit.id }}, 'outfit')">
-                                Like ❤️
-                            </button>
-                        </div>
-                    </div>
+                {% import 'macros/macro.html.twig' as macros %}
+
+                    {{ macros.outfit_card(like.outfit) }}
+
                 {% endif %}
             {% endfor %}
         {% else %}
