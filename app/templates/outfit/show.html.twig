@@ -3,79 +3,78 @@
 {% block title %}Outfit{% endblock %}
 
 {% block body %}
-<section class="mx-auto">
-  <div class="container bg-white rounded-lg shadow-md p-6">
+<section class="container mx-auto p-6 bg-gray-50 dark:bg-gray-dark shadow-xl dark:text-white">
     <div class="flex flex-col gap-6">
-      <div class="grid grid-cols-1 items-stretch gap-x-0 gap-y-4 lg:grid-cols-3 lg:gap-4">
-        <img src="{{ outfit.imageUrl }}" alt="{{ outfit.name }}" class="w-full rounded-md object-cover lg:h-auto" />
-        <div class="rounded-lg border bg-card text-card-foreground shadow-sm col-span-2 flex items-center justify-center p-6">
-          <div class="flex flex-col gap-4">
-            <div class="flex flex-col items-start">
-              <p>{{ outfit.name }}</p>
-              <p>{{ outfit.userId.firstname }} {{ outfit.userId.lastname }}</p>
-              <p class="text-zinc-600">{{ outfit.addAt ? outfit.addAt|date('Y-m-d H:i:s') : '' }}</p>
-              <p class="text-sm">{{ outfit.isPublic ? 'Public' : 'Private' }}</p>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <img src="{{ outfit.imageUrl }}" alt="{{ outfit.name }}" class="w-full rounded-xl object-cover lg:h-auto shadow-xl transform transition-transform duration-300 hover:scale-105" />
+            <div class="col-span-2 flex items-center justify-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-col items-start">
+                        <p class="text-3xl font-semibold text-gray-800 dark:text-white">{{ outfit.name }}</p>
+                        <p class="text-lg text-gray-700 dark:text-gray-300">{{ outfit.userId.firstname }} {{ outfit.userId.lastname }}</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ outfit.addAt ? outfit.addAt|date('Y-m-d H:i:s') : '' }}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ outfit.isPublic ? 'Public' : 'Private' }}</p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        {% for item in outfit.items %}
-        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-          <div class="p-6 px-6 pt-6 ">
-            <q>{{ item.name }}</q>
-          </div>
-          <div class="flex items-center p-6 pt-0">
-            <div class="flex gap-4 leading-5">
-              <div class="text-sm">
-              {% if item.partnerUrl is not empty %}
-            <a href="{{ item.partnerUrl }}" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition" target="_blank">Acheter</a>
-        {% else %}
-            <p class="text-gray-500">Pas de lien disponible</p>
-        {% endif %}    
-            <p class="font-medium"> name: {{ item.name }} color: {{ item.color }} brand: {{ item.brand }}  fit: {{ item.fit }}</p>
-              </div>
-            </div>
-          </div>
 
-          <div class="flex justify-between p-6 pt-0">
-          {% if is_granted('EDIT', item) %}
-        <a href="{{ path('app_item_edit', {'id': item.id}) }}" class="text-blue-500 hover:text-blue-700">Éditer</a>
-        {% endif %}
-        {% if is_granted('DELETE', item) %}
-        <form method="post" action="{{ path('app_item_delete', {'id': item.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-              <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
-              <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">Delete</button>
-            </form>
-          </div>
-          {% endif %}
-
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {% for item in outfit.items %}
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="p-6">
+                        <q class="text-lg font-semibold text-gray-800 dark:text-white">{{ item.name }}</q>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <div class="flex gap-4">
+                            <div class="text-sm">
+                                {% if item.partnerUrl is not empty %}
+                                    <a href="{{ item.partnerUrl }}" class="text-green-600 hover:text-green-700 transition-all" target="_blank">Acheter</a>
+                                {% else %}
+                                    <p class="text-gray-500 dark:text-gray-400">Pas de lien disponible</p>
+                                {% endif %}
+                                <p class="font-medium text-gray-700 dark:text-gray-300">Nom: {{ item.name }} Couleur: {{ item.color }} Marque: {{ item.brand }} Coupe: {{ item.fit }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between p-6 pt-0">
+                        {% if is_granted('EDIT', item) %}
+                            <a href="{{ path('app_item_edit', {'id': item.id}) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-600 transition-all">Éditer</a>
+                        {% endif %}
+                        {% if is_granted('DELETE', item) %}
+                            <form method="post" action="{{ path('app_item_delete', {'id': item.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+                                <button class="w-full lg:w-auto px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all">Supprimer</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-      </div>
     </div>
-    <div class="mt-6 flex justify-between">
-    {% if app.request.query.get('from') == 'social' %}
-    {% if app.user and app.user.id != outfit.userId.id %}
-        <div class="mt-4 flex justify-between">
-            <form method="post" action="{{ path('app_outfit_add_to_user', {'id': outfit.id}) }}">
-                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">Add to My Outfits</button>
-            </form>
-        </div>
-    {% endif %}
-            <a href="{{ path('app_social') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Back to feed</a>
+
+    <div class="mt-6 flex justify-between items-center">
+        {% if app.request.query.get('from') == 'social' %}
+            {% if app.user and app.user.id != outfit.userId.id %}
+                <div class="mt-4 flex justify-between">
+                    <form method="post" action="{{ path('app_outfit_add_to_user', {'id': outfit.id}) }}">
+                        <button type="submit" class="w-full lg:w-auto px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Ajouter à Mes Tenues</button>
+                    </form>
+                </div>
+            {% endif %}
+            <a href="{{ path('app_social') }}" class="w-full lg:w-auto px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all">Retour au fil</a>
         {% elseif app.request.query.get('from') == 'profile' %}
-            <a href="{{ path('app_profile') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Back to profile</a>
+            <a href="{{ path('app_profile') }}" class="w-full lg:w-auto px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all">Retour au profil</a>
         {% endif %}
         {% if is_granted('EDIT', outfit) %}
-        <a href="{{ path('app_outfit_edit', {'id': outfit.id}) }}" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">Edit</a>
+            <a href="{{ path('app_outfit_edit', {'id': outfit.id}) }}" class="w-full lg:w-auto px-6 py-3 bg-warning text-white rounded-xl hover:bg-yellow-700 transition-all">Éditer</a>
         {% endif %}
     </div>
-    <div class="mt-4">
+
+    <div class="mt-6">
         {% if is_granted('DELETE', outfit) %}
-        {{ include('outfit/_delete_form.html.twig') }}
+            {{ include('outfit/_delete_form.html.twig') }}
         {% endif %}
     </div>
-  </div>
 </section>
 {% endblock %}
