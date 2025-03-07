@@ -19,7 +19,6 @@ final class Version20250304234829 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE "like" (id SERIAL NOT NULL, user_id_id INT DEFAULT NULL, outfit_id INT DEFAULT NULL, item_id INT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_AC6340B39D86650F ON "like" (user_id_id)');
         $this->addSql('CREATE INDEX IDX_AC6340B3AE96E385 ON "like" (outfit_id)');
@@ -33,7 +32,6 @@ final class Version20250304234829 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE "like" DROP CONSTRAINT FK_AC6340B39D86650F');
         $this->addSql('ALTER TABLE "like" DROP CONSTRAINT FK_AC6340B3AE96E385');
