@@ -8,12 +8,15 @@
     --color-white: #fff;
     --color-gray: #f5f5f5;
     --color-gray-medium: #8c8c8c;
+    --color-gray-dark: #23272F;
+    --color-gray-absolute: #1C1E24;
     --color-danger: #E7000B;
     --color-valid: #5cb357;
     --color-info: #1d74d1;
     --color-warning:#e3b04b; 
     --color-purple: #9810F9;
     --color-purple-hover: #7011B5;
+    
     /* gradient */
     --gradient-purple: linear-gradient(90deg, #9810F9 0%, #7011B5 100%);
     /* size */
