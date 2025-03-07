@@ -9,7 +9,7 @@
 - **Front-end** : Twig, TailwindCSS
 - **Intelligence Artificielle** : OpenAI
 - **Base de données** : PostgreSQL
-- **Déploiement** : VPS / Heroku / Autre
+- **Déploiement** : OVH et DNS acheté chez Route 53 (AWS)
 
 
 ## Fonctionnalités principales
@@ -90,7 +90,7 @@ npm run watch (lancer la compilation Tailwind)
 ## 📅 Déploiement  
 
 L’application est disponible en production ici :  
-🔗 [Lien vers l’application en ligne](https://votre-lien.com)  
+🔗 [Lien vers l’application en ligne](https://makeitshineclothing.com/)  
 
 
 ## 🛡️ Sécurité  
