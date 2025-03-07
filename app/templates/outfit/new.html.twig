@@ -5,7 +5,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-purple-600 to-purple-800 px-6 py-12">
+<div class="min-h-screen flex flex-col items-center justify-center bg-purple px-6 py-12 dark:bg-gray-dark">
     <h1 class="text-3xl font-bold text-white mb-8 text-center">Ajouter une nouvelle tenue</h1>
 
     <div class="w-full max-w-md">
@@ -19,7 +19,7 @@
                     </div>
                 {% endif %}
             {% endfor %}
-            <button class="w-full bg-white text-purple-700 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-200 transition">Enregistrer</button>
+            <button class="w-full bg-white text-purple py-3 rounded-lg font-semibold shadow-md hover:bg-gray-200 transition dark:bg-purple dark:text-white dark:hover:text-purple">Enregistrer</button>
         {{ form_end(form) }}
     </div>
 
