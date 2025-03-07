@@ -7,7 +7,7 @@
     <h1 class="text-2xl font-bold mb-4">Éditer un item</h1>
 
         <div class="flex flex-col p-6 gap-6">
-<form method="POST" enctype="multipart/form-data" action="{{ path('app_outfit_edit', {'id': outfit.id}) }}">
+        <form method="POST" enctype="multipart/form-data" action="{{ path('app_outfit_edit', {'id': item.id}) }}">
                 {{ form_row(form._token) }} 
         <div class="flex flex-col">
             <label for="{{ form.name.vars.label }}" class="font-bold text-lg" >{{ form.name.vars.label }}</label>
