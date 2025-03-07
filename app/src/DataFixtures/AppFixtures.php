@@ -9,7 +9,6 @@ use App\Entity\Outfit;
 use App\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-
 class AppFixtures extends Fixture
 {
     private $passwordHasher;
@@ -18,81 +17,97 @@ class AppFixtures extends Fixture
     {
         $this->passwordHasher = $passwordHasher;
     }
+
     public function load(ObjectManager $manager): void
     {
         $items = [
-            ['name' => 'T-shirt nike', 'brand' => 'Nike', 'color' => 'black', 'type' => 'top', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'pants nike', 'brand' => 'Nike', 'color' => 'black', 'type' => 'pants', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'shoes nike', 'brand' => 'Nike', 'color' => 'black', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'T-shirt adidas', 'brand' => 'Adidas', 'color' => 'white', 'type' => 'top', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'pants adidas', 'brand' => 'Adidas', 'color' => 'white', 'type' => 'pants', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'shoes adidas', 'brand' => 'Adidas', 'color' => 'white', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'T-shirt puma', 'brand' => 'Puma', 'color' => 'red', 'type' => 'top', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'pants puma', 'brand' => 'Puma', 'color' => 'red', 'type' => 'pants', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
-            ['name' => 'shoes puma', 'brand' => 'Puma', 'color' => 'red', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
+            ['name' => 'Casquette', 'brand' => 'New Era', 'color' => 'blanc', 'type' => 'cap', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true],
+            ['name' => 'Pull', 'brand' => 'Ami Paris', 'color' => 'bleu ciel', 'type' => 'top', 'fit' => 'oversize', 'material' => 'wool', 'isPublic' => true, 'partnerUrl' => 'https://northexclusive.fr/products/ami-paris-col-roule-alpaga-bleu'],
+            ['name' => 'Pantalon', 'brand' => 'Ami Paris', 'color' => 'black', 'type' => 'bottom', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'bleu ciel', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true, 'partnerUrl' => 'https://www.goat.com/fr-fr/sneakers/off-white-x-wmns-waffle-racer-cd8180-400'],
+
+            ['name' => 'Veste', 'brand' => 'Bape', 'color' => 'bleu', 'type' => 'jacket', 'fit' => 'regular', 'material' => 'denim', 'isPublic' => true,],
+            ['name' => 'T-shirt', 'brand' => 'Bape', 'color' => 'blanc', 'type' => 'top', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Short', 'brand' => 'Bape', 'color' => 'camouflage', 'type' => 'bottom', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Chaussures', 'brand' => 'Bape', 'color' => 'blanc', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true, 'partnerUrl' => 'https://www.goat.com/fr-fr/sneakers/bapesta-abc-camo-green-2022-1i70191005-grn'],
+
+            ['name' => 'Sweatshirt', 'brand' => 'Denim Tears', 'color' => 'rose', 'type' => 'top', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true, 'partnerUrl' => 'https://dimension-stores.com/products/301-100-30-pink'],
+            ['name' => 'Survetement', 'brand' => 'Denim Tears', 'color' => 'rose', 'type' => 'bottom', 'fit' => 'oversize', 'material' => 'cotton', 'isPublic' => true, 'partnerUrl' => 'https://dimension-stores.com/products/401-100-30-pink'],
+            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'blanc', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true,],
+            ['name' => 'Chaine', 'brand' => 'Live Yours', 'color' => 'gold', 'type' => 'accessories', 'fit' => 'regular', 'material' => 'metal', 'isPublic' => true,],
+
+            ['name' => 'Varsity Jacket', 'brand' => 'Louis Vuitton', 'color' => 'blanc', 'type' => 'jacket', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Pantalon', 'brand' => 'Louis Vuitton', 'color' => 'bleu', 'type' => 'bottom', 'fit' => 'large', 'material' => 'denim', 'isPublic' => true,],
+            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'white', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true,],
+            ['name' => 'Ceinture', 'brand' => 'Louis Vuitton', 'color' => 'argent', 'type' => 'accessories', 'fit' => 'regular', 'material' => 'metal', 'isPublic' => true,],
+
+            ['name' => 'Veste', 'brand' => 'Tommy Hilfiger', 'color' => 'bleu', 'type' => 'jacket', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'T-shirt', 'brand' => 'Tommy Hilfiger', 'color' => 'blanc', 'type' => 'top', 'fit' => 'slim', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Pantalon', 'brand' => 'Tommy Hilfiger', 'color' => 'bleu', 'type' => 'bottom', 'fit' => 'regular', 'material' => 'cotton', 'isPublic' => true,],
+            ['name' => 'Chaussures', 'brand' => 'Nike', 'color' => 'blanc', 'type' => 'shoes', 'fit' => 'regular', 'material' => 'leather', 'isPublic' => true,],
         ];
 
         $createdItems = [];
         foreach ($items as $itemData) {
-            $newItem = new Item();
-            $newItem->setName($itemData['name']);
-            $newItem->setBrand($itemData['brand']);
-            $newItem->setColor($itemData['color']);
-            $newItem->setType($itemData['type']);
-            $newItem->setFit($itemData['fit']);
-            $newItem->setMaterial($itemData['material']);
-            $newItem->setIsPublic($itemData['isPublic']);
-            $manager->persist($newItem);
-            $createdItems[] = $newItem;
+            $item = new Item();
+            $item->setName($itemData['name']);
+            $item->setBrand($itemData['brand']);
+            $item->setColor($itemData['color']);
+            $item->setType($itemData['type']);
+            $item->setFit($itemData['fit']);
+            $item->setMaterial($itemData['material']);
+            $item->setIsPublic($itemData['isPublic']);
+            if (isset($itemData['partnerUrl'])) {
+                $item->setPartnerUrl($itemData['partnerUrl']);
+            }
+            $manager->persist($item);
+            $createdItems[] = $item;
         }
 
-        $outfit = new Outfit();
-        $outfit->setName('Sporty outfit');
-        $outfit->setImageUrl('https://via.placeholder.com/150');
-        $outfit->setAddAt(new \DateTimeImmutable());
-        $outfit->setPromptResult("100% sporty outfit");
-        $outfit->setIsPublic(true);
-
-        $outfit->addItem($createdItems[0]);
-        $outfit->addItem($createdItems[1]);
-        $outfit->addItem($createdItems[2]);
-
-        $manager->persist($outfit);
-        $userData = [
-            ['firstName' => 'John', 'lastName' => 'Doe', 'email' => 'john.doe@example.com'],
-            ['firstName' => 'Jane', 'lastName' => 'Doe', 'email' => 'jane.doe@example.com'],
-            ['firstName' => 'Jim', 'lastName' => 'Beam', 'email' => 'jim.beam@example.com'],
-            ['firstName' => 'Jack', 'lastName' => 'Daniels', 'email' => 'jack.daniels@example.com'],
-            ['firstName' => 'Jill', 'lastName' => 'Valentine', 'email' => 'jill.valentine@example.com'],
+        $outfits = [
+            ['name' => 'Tenue AMI Paris', 'image' => '/images/ami.jpg', 'items' => [$createdItems[0], $createdItems[1], $createdItems[2], $createdItems[3]], 'isPublic' => true],
+            ['name' => 'Tenue Bape', 'image' => '/images/bape.jpeg', 'items' => [$createdItems[4], $createdItems[5], $createdItems[6], $createdItems[7]], 'isPublic' => true],
+            ['name' => 'Tenue Denim Tears', 'image' => '/images/denimtears.jpg', 'items' => [$createdItems[8], $createdItems[9], $createdItems[10], $createdItems[11]], 'isPublic' => true],
+            ['name' => 'Tenue Louis Vuitton', 'image' => '/images/louisvuitton.jpg', 'items' => [$createdItems[12], $createdItems[13], $createdItems[14], $createdItems[15]], 'isPublic' => true],
+            ['name' => 'Tenue Tommy Hilfiger', 'image' => '/images/tommy.jpg', 'items' => [$createdItems[16], $createdItems[17], $createdItems[18], $createdItems[19]], 'isPublic' => true],
         ];
 
-        foreach ($userData as $index => $data) {
-            $user = new User();
-            $user->setFirstName($data['firstName']);
-            $user->setLastName($data['lastName']);
-            $user->setEmail($data['email']);
+        $createdOutfits = [];
+        foreach ($outfits as $outfitData) {
+            $outfit = new Outfit();
+            $outfit->setName($outfitData['name']);
+            $outfit->setImageUrl($outfitData['image']);
+            $outfit->setAddAt(new \DateTimeImmutable());
+            $outfit->setPromptResult($outfitData['name']);
+            $outfit->setIsPublic($outfitData['isPublic']);
+            foreach ($outfitData['items'] as $item) {
+                $outfit->addItem($item);
+            }
+            $manager->persist($outfit);
+            $createdOutfits[] = $outfit;
+        }
 
+        $users = [
+            ['firstName' => 'Lucas', 'lastName' => 'Martin', 'email' => 'lucas.martin@example.com', 'outfits' => [$createdOutfits[0], $createdOutfits[1]], 'items' => [$createdItems[0], $createdItems[1],$createdItems[2], $createdItems[3],$createdItems[4], $createdItems[5], $createdItems[6], $createdItems[7]]],
+            ['firstName' => 'Thomas', 'lastName' => 'Leroy', 'email' => 'thomas.leroy@example.com', 'outfits' => [$createdOutfits[2], $createdOutfits[3]], 'items' => [$createdItems[8], $createdItems[9], $createdItems[10], $createdItems[11], $createdItems[12], $createdItems[13], $createdItems[14], $createdItems[15]]],
+            ['firstName' => 'Emma', 'lastName' => 'Dupont', 'email' => 'emma.dupont@example.com', 'outfits' => [$createdOutfits[4]], 'items' => [$createdItems[16], $createdItems[17], $createdItems[18], $createdItems[19]]],
+        ];
+
+        foreach ($users as $userData) {
+            $user = new User();
+            $user->setFirstName($userData['firstName']);
+            $user->setLastName($userData['lastName']);
+            $user->setEmail($userData['email']);
             $hashedPassword = $this->passwordHasher->hashPassword($user, 'password');
             $user->setPassword($hashedPassword);
 
-            $userOutfit = new Outfit();
-            $userOutfit->setName('Outfit ' . ($index + 1));
-            $userOutfit->setImageUrl('https://via.placeholder.com/150');
-            $userOutfit->setAddAt(new \DateTimeImmutable());
-            $userOutfit->setPromptResult("Outfit " . ($index + 1) . " description");
-            $userOutfit->setIsPublic($index % 2 == 0); // Alternating public/private outfits
-
-
-
-            $userOutfit->addItem($createdItems[$index * 2 % count($createdItems)]);
-            $userOutfit->addItem($createdItems[($index * 2 + 1) % count($createdItems)]);
-
-            $manager->persist($userOutfit);
-
-            $user->addOutfit($userOutfit);
-            $user->addItem($createdItems[($index * 2 + 2) % count($createdItems)]);
-            $user->addItem($createdItems[($index * 2 + 3) % count($createdItems)]);
-
+            foreach ($userData['outfits'] as $outfit) {
+                $user->addOutfit($outfit);
+            }
+            foreach ($userData['items'] as $item) {
+                $user->addItem($item);
+            }
+            
             $manager->persist($user);
         }
 
@@ -103,7 +118,6 @@ class AppFixtures extends Fixture
         $hashedPassword = $this->passwordHasher->hashPassword($admin, 'adminpassword');
         $admin->setPassword($hashedPassword);
         $admin->setRoles(['ROLE_ADMIN']);
-
         $manager->persist($admin);
 
         $manager->flush();
