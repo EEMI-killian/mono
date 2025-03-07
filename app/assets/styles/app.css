@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @theme {
     --font-display: "Satoshi", "sans-serif";
     /* colors */
@@ -19,3 +20,4 @@
     --size-1: 1rem;
     --size-2: 2rem;
 }
+
